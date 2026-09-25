@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convite de Casamento - Maria Eduarda & Davi</title>
+  
+  <!-- Fontes Tipográficas: Alex Brush (caligráfica fluida), Playfair Display (editorial refinada) e Montserrat (moderna/geométrica) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* -------------------------------------------------------------
+       VARIÁVEIS DE DESIGN & PALETA DE CORES
+       ------------------------------------------------------------- */
+    :root {
+      --bg-linen: #FBF9F5;
+      --bg-card: #FFFFFF;
+      --gold-primary: #C5A059;
+      --gold-light: #E7D8BA;
+      --gold-dark: #9E7B36;
+      --text-main: #2C3531;       /* Verde oliva muito profundo / cinza chumbo */
+      --text-muted: #5C6560;
+      --border-subtle: rgba(197, 160, 89, 0.35);
+      --shadow-soft: 0 10px 30px rgba(44, 53, 49, 0.05);
+    }
+
+    /* -------------------------------------------------------------
+       RESET & BASE SETUP
+       ------------------------------------------------------------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: #E5E5E5; /* Fundo de visualização do navegador */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-main);
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* -------------------------------------------------------------
+       CANVAS EXATO DE TELA VERTICAL (1080 x 1920 px)
+       ------------------------------------------------------------- */
+    .screen-canvas {
+      width: 1080px;
+      height: 1920px;
+      min-width: 1080px;
+      min-height: 1920px;
+      max-width: 1080px;
+      max-height: 1920px;
+      background-color: var(--bg-linen);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 95px 85px 80px 85px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Moldura elegante com filete duplo sutil */
+    .frame-border {
+      position: absolute;
+      top: 35px;
+      left: 35px;
+      right: 35px;
+      bottom: 35px;
+      border: 1.5px solid var(--border-subtle);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .frame-border::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      border: 0.5px solid rgba(197, 160, 89, 0.2);
+    }
+
+    /* -------------------------------------------------------------
+       SEÇÃO DO TOPO: MONOGRAMA & VERSÍCULO
+       ------------------------------------------------------------- */
+    .header-section {
+      width: 100%;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .monogram-wrapper {
+      margin: 0 auto 30px auto;
+      width: 120px;
+      height: 120px;
+      border: 1px solid var(--gold-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #FFFDF9 60%, rgba(249, 248, 246, 0.3) 100%);
+      box-shadow: 0 4px 15px rgba(197, 160, 89, 0.12);
+    }
+
+    .monogram-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 400;
+      color: var(--gold-dark);
+      letter-spacing: 5px;
+      text-indent: 5px;
+    }
+
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 23px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .quote-ref {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-style: normal;
+      font-size: 15px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--gold-primary);
+      margin-top: 8px;
+    }
+
+    /* -------------------------------------------------------------
+       SEÇÃO CENTRAL: NOMES DOS NOIVOS
+       ------------------------------------------------------------- */
+    .names-section {
+      width: 100%;
+      text-align: center;
+      z-index: 2;
+      margin: 20px 0;
+    }
+
+    .invitation-intro {
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 7px;
+      color: var(--text-muted);
+      margin-bottom: 25px;
+      font-weight: 400;
+    }
+
+    .couple-names {
+      font-family: 'Alex Brush', cursive;
+      font-size: 110px;
+      color: var(--text-main);
+      line-height: 1.15;
+      font-weight: 400;
+      padding: 0 20px;
+      text-shadow: 0 2px 4px rgba(44, 53, 49, 0.04);
+    }
+
+    .ampersand {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 42px;
+      color: var(--gold-primary);
+      margin: -10px 0;
+    }
+
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 35px;
+    }
+
+    .ornament-line {
+      width: 110px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    }
+
+    .ornament-diamond {
+      width: 7px;
+      height: 7px;
+      background-color: var(--gold-primary);
+      transform: rotate(45deg);
+    }
+
+    /* -------------------------------------------------------------
+       SEÇÃO DE DETALHES: DATA & LOCAIS
+       ------------------------------------------------------------- */
+    .details-section {
+      width: 100%;
+      max-width: 860px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .date-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 45px;
+    }
+
+    .date-day-week {
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      color: var(--gold-dark);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .date-highlight {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--text-main);
+    }
+
+    .events-grid {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      width: 100%;
+    }
+
+    .event-card {
+      flex: 1;
+      background-color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(197, 160, 89, 0.25);
+      border-radius: 12px;
+      padding: 30px 20px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(4px);
+    }
+
+    .event-icon {
+      width: 32px;
+      height: 32px;
+      margin: 0 auto 14px auto;
+      color: var(--gold-primary);
+    }
+
+    .event-title {
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--gold-dark);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .event-time {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .event-place {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .event-city {
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    /* -------------------------------------------------------------
+       SEÇÃO DOS BOTÕES DE AÇÃO INTERATIVOS
+       ------------------------------------------------------------- */
+    .actions-section {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 2;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 64px;
+      border-radius: 32px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-svg {
+      width: 18px;
+      height: 18px;
+      margin-right: 12px;
+      fill: currentColor;
+    }
+
+    /* Botão Principal Dourado (RSVP) */
+    .btn-primary {
+      background: linear-gradient(135deg, #D4AF67 0%, #B88E44 100%);
+      color: #FFFFFF;
+      box-shadow: 0 8px 20px rgba(184, 142, 68, 0.28);
+      font-weight: 600;
+      border: 1px solid #D4AF67;
+    }
+
+    /* Botões Secundários Elegantes em Contorno */
+    .btn-outline {
+      background-color: #FFFFFF;
+      color: var(--text-main);
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold-primary);
+      background-color: #FCFBF9;
+      color: var(--gold-dark);
+    }
+
+    /* -------------------------------------------------------------
+       REGRAS DE IMPRESSÃO / GERAÇÃO EXATA DE PDF
+       ------------------------------------------------------------- */
+    @media print {
+      @page {
+        size: 1080px 1920px;
+        margin: 0;
+      }
+      
+      html, body {
+        width: 1080px;
+        height: 1920px;
+        margin: 0;
+        padding: 0;
+        background: transparent !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .screen-canvas {
+        box-shadow: none !important;
+        margin: 0 !important;
+        width: 1080px !important;
+        height: 1920px !important;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Garante que links permaneçam clicáveis sem decorações estranhas de impressão */
+      a {
+        text-decoration: none !important;
+        color: inherit;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="screen-canvas">
+    
+    <!-- Moldura Perimetral -->
+    <div class="frame-border"></div>
+
+    <!-- 1. Topo: Monograma & Versículo -->
+    <header class="header-section">
+      <div class="monogram-wrapper">
+        <span class="monogram-text">M&D</span>
+      </div>
+      <p class="quote-text">
+        "O amor tudo sofre, tudo crê, tudo espera, tudo suporta."
+      </p>
+      <span class="quote-ref">1 Coríntios 13:7</span>
+    </header>
+
+    <!-- 2. Centro: Nomes dos Noivos -->
+    <section class="names-section">
+      <p class="invitation-intro">Com a bênção de Deus e de seus pais, convidam para o seu casamento</p>
+      <div class="couple-names">
+        Maria Eduarda
+        <span class="ampersand">&</span>
+        Davi
+      </div>
+      <div class="ornament-divider">
+        <span class="ornament-line"></span>
+        <span class="ornament-diamond"></span>
+        <span class="ornament-line"></span>
+      </div>
+    </section>
+
+    <!-- 3. Detalhes: Data, Cerimônia & Recepção -->
+    <section class="details-section">
+      <div class="date-badge">
+        <span class="date-day-week">Sábado</span>
+        <span class="date-highlight">16 • OUTUBRO • 2027</span>
+      </div>
+
+      <div class="events-grid">
+        <!-- Cerimônia -->
+        <article class="event-card">
+          <svg class="event-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            <!-- Ícone estilizado representando aliança/símbolo religioso -->
+            <path d="M12 3v6m-3-3h6"/>
+            <path d="M4 21h16"/>
+            <path d="M6 21V10l6-5 6 5v11"/>
+          </svg>
+          <h2 class="event-title">Cerimônia</h2>
+          <div class="event-time">20h00</div>
+          <div class="event-place">Igreja Santa Terezinha</div>
+          <div class="event-city">Taguatinga Norte — DF</div>
+        </article>
+
+        <!-- Recepção -->
+        <article class="event-card">
+          <svg class="event-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 22h8m-4-7v7m-7-15a7 7 0 0 0 14 0V3H5v4z"/>
+            <path d="M5 8h14"/>
+          </svg>
+          <h2 class="event-title">Recepção</h2>
+          <div class="event-time">21h30</div>
+          <div class="event-place">Maison Mizuno</div>
+          <div class="event-city">Brasília — DF</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Botões Interativos com Links Ativos -->
+    <footer class="actions-section">
+      <!-- Botão 1: Igreja -->
+      <a href="https://maps.google.com/?q=Igreja+Santa+Terezinha+Taguatinga+Norte" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+        <svg class="btn-svg" viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        Como Chegar à Igreja
+      </a>
+
+      <!-- Botão 2: Recepção -->
+      <a href="https://maps.google.com/?q=Maison+Mizuno+Brasilia" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+        <svg class="btn-svg" viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        Como Chegar à Recepção
+      </a>
+
+      <!-- Botão 3: RSVP (Destaque Principal) -->
+      <a href="https://api.whatsapp.com/send?phone=5561999999999&text=Ol%C3%A1!%20Gostaria%20de%20confirmar%20minha%20presen%C3%A7a%20no%20casamento%20de%20Maria%20Eduarda%20e%20Davi." target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <svg class="btn-svg" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.22-1.3c1.41.76 3.01 1.2 4.78 1.2 5.52 0 10-4.48 10-10S17.52 2 12 2zm4.5 14.2c-.22.61-1.28 1.17-1.78 1.22-.47.05-1.07.07-3.32-.86-2.6-1.07-4.24-3.73-4.37-3.9-.13-.17-1.05-1.4-1.05-2.67 0-1.27.67-1.89.9-2.14.24-.26.52-.32.7-.32.17 0 .35 0 .5.01.16.01.38-.06.59.45.22.53.75 1.83.82 1.96.07.14.11.3.02.48-.09.17-.14.28-.27.44-.14.15-.29.35-.41.47-.14.14-.29.29-.12.57.16.29.73 1.21 1.57 1.96 1.08.96 1.99 1.26 2.27 1.4.28.14.44.12.61-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.15.26.1 1.64.77 1.92.91.28.14.47.21.54.33.07.12.07.69-.15 1.3z"/>
+        </svg>
+        Confirmar Presença (RSVP)
+      </a>
+
+      <!-- Botão 4: Lista de Presentes -->
+      <a href="https://seusite.com/lista-de-presentes" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+        <svg class="btn-svg" viewBox="0 0 24 24">
+          <path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.65-.5-.65C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76V8h2v.76L15.38 12 17 10.83 14.92 8H20v6z"/>
+        </svg>
+        Lista de Presentes
+      </a>
+    </footer>
+
+  </main>
+
+</body>
+</html>

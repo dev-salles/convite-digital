@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Lista de Presentes | Maria Eduarda & Davi</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Alex Brush, Playfair Display & Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBF9F5',
+            'linen-dark': '#F3EFEA',
+            charcoal: '#2C3531',
+            muted: '#636D67',
+            gold: {
+              DEFAULT: '#C5A059',
+              light: '#E6D7B9',
+              hover: '#B58E45',
+              dark: '#93702B'
+            }
+          },
+          fontFamily: {
+            cursive: ['"Alex Brush"', 'cursive'],
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Montserrat"', 'sans-serif'],
+          },
+          boxShadow: {
+            'subtle': '0 8px 30px rgba(44, 53, 49, 0.05)',
+            'card-hover': '0 15px 35px rgba(197, 160, 89, 0.14)',
+            'modal': '0 25px 60px rgba(44, 53, 49, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Estilos base refinados */
+    body {
+      background-color: #FBF9F5;
+      color: #2C3531;
+      font-family: 'Montserrat', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Ocultar barra de rolagem horizontal nos filtros do mobile */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Efeito de transição de fade e slide para o modal */
+    .modal-enter {
+      opacity: 0;
+      transform: scale(0.96) translateY(12px);
+    }
+    .modal-enter-active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-exit {
+      opacity: 0;
+      transform: scale(0.96) translateY(12px);
+      transition: all 0.2s cubic-bezier(0.7, 0, 0.84, 0);
+    }
+  </style>
+</head>
+<body class="bg-linen min-h-screen text-charcoal flex flex-col selection:bg-gold/20 selection:text-charcoal relative overflow-x-hidden">
+
+  <!-- TOPO / HEADER -->
+  <header class="relative pt-12 pb-10 px-4 md:px-8 max-w-4xl mx-auto text-center w-full">
+    <!-- Moldura sutil decorativa de fundo -->
+    <div class="pointer-events-none absolute inset-x-4 top-6 bottom-4 border border-gold/20 rounded-3xl -z-10"></div>
+
+    <!-- Monograma Superior -->
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full border border-gold bg-white shadow-sm mb-4">
+      <span class="font-serif text-gold-dark text-xl tracking-wider">M&D</span>
+    </div>
+
+    <!-- Nomes com Caligrafia -->
+    <div class="font-cursive text-5xl sm:text-6xl text-charcoal tracking-wide mb-1">
+      Maria Eduarda <span class="text-gold font-serif italic text-3xl sm:text-4xl">&</span> Davi
+    </div>
+
+    <!-- Data do Grande Dia -->
+    <p class="text-xs uppercase tracking-[0.3em] font-medium text-gold-dark mb-6">
+      16 de Outubro de 2027 • Brasília, DF
+    </p>
+
+    <!-- Divisória Dourada Minimalista -->
+    <div class="flex items-center justify-center gap-3 my-4 opacity-75">
+      <span class="w-12 h-[1px] bg-gradient-to-r from-transparent to-gold"></span>
+      <span class="w-1.5 h-1.5 rotate-45 bg-gold inline-block"></span>
+      <span class="w-12 h-[1px] bg-gradient-to-l from-transparent to-gold"></span>
+    </div>
+
+    <!-- Título Principal -->
+    <h1 class="font-serif text-3xl sm:text-4xl text-charcoal font-semibold mt-3 mb-4">
+      Lista de Presentes
+    </h1>
+
+    <!-- Carta Carinhosa para os Convidados -->
+    <p class="text-muted font-light text-sm sm:text-base leading-relaxed max-w-xl mx-auto px-2">
+      A presença, a bênção e o carinho de cada um de vocês são os maiores presentes que poderíamos receber. 
+      Se desejarem nos abençoar com uma contribuição para o início do nosso lar ou para a nossa lua de mel, 
+      preparamos esta lista com muito carinho através de cotas virtuais em Pix!
+    </p>
+
+    <!-- Card Destaque: Contribuição Livre -->
+    <div class="mt-8 mx-auto max-w-lg bg-gradient-to-br from-white to-linen-dark/50 border border-gold/30 rounded-2xl p-5 shadow-subtle flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-center sm:text-left">
+        <span class="inline-block text-[11px] uppercase tracking-wider font-semibold text-gold bg-gold/10 px-2.5 py-0.5 rounded-full mb-1">
+          Livre Escolha
+        </span>
+        <h3 class="font-serif text-lg font-medium text-charcoal">Contribuir com Outro Valor</h3>
+        <p class="text-xs text-muted">Prefere enviar uma quantia de sua preferência?</p>
+      </div>
+      <button 
+        onclick="openPixModal('Contribuição Especial dos Noivos', '', 'personalizado')"
+        class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-charcoal text-white hover:bg-gold text-xs font-semibold uppercase tracking-wider transition-colors duration-300 shadow-md">
+        Valor Avulso
+      </button>
+    </div>
+  </header>
+
+  <!-- BARRA DE FILTROS (MOBILE HORIZONTAL SCROLL) -->
+  <section class="max-w-4xl mx-auto w-full px-4 mb-8">
+    <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar py-2 px-1">
+      <button 
+        onclick="filterGifts('todos', this)" 
+        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-gold text-white shadow-sm">
+        Todos
+      </button>
+      <button 
+        onclick="filterGifts('lua-de-mel', this)" 
+        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-white border border-gold/25 text-muted hover:border-gold hover:text-charcoal">
+        Lua de Mel
+      </button>
+      <button 
+        onclick="filterGifts('casa-nova', this)" 
+        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-white border border-gold/25 text-muted hover:border-gold hover:text-charcoal">
+        Casa Nova
+      </button>
+      <button 
+        onclick="filterGifts('experiencias', this)" 
+        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-white border border-gold/25 text-muted hover:border-gold hover:text-charcoal">
+        Experiências & Mimos
+      </button>
+    </div>
+  </section>
+
+  <!-- GRADE DE PRESENTES VIRTUAIS -->
+  <main class="max-w-4xl mx-auto w-full px-4 pb-20 flex-grow">
+    <div id="gifts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Card 1 -->
+      <article data-category="lua-de-mel" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
+        <div class="relative h-44 overflow-hidden bg-linen-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=600&q=80" 
+            alt="Jantar Romântico" 
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
+            Lua de Mel
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Jantar à Luz de Velas</h3>
+            <p class="text-xs text-muted font-light leading-relaxed mb-4">
+              Para o primeiro brinde e um jantar inesquecível olhando as estrelas da nossa lua de mel.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
+              <span class="font-serif text-lg font-bold text-charcoal">R$ 220,00</span>
+            </div>
+            <button 
+              onclick="openPixModal('Jantar à Luz de Velas na Lua de Mel', 220)"
+              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm flex items-center gap-1.5">
+              <span>Presentear</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article data-category="experiencias" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
+        <div class="relative h-44 overflow-hidden bg-linen-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=600&q=80" 
+            alt="Café na Cama" 
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
+            Experiências
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Café na Cama dos Recém-Casados</h3>
+            <p class="text-xs text-muted font-light leading-relaxed mb-4">
+              Croissants frescos, café quentinho e mimos para a primeira manhã depois da festa!
+            </p>
+          </div>
+          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
+              <span class="font-serif text-lg font-bold text-charcoal">R$ 95,00</span>
+            </div>
+            <button 
+              onclick="openPixModal('Café na Cama dos Recém-Casados', 95)"
+              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
+              Presentear
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article data-category="casa-nova" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
+        <div class="relative h-44 overflow-hidden bg-linen-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80" 
+            alt="Sofá Confortável" 
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
+            Casa Nova
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Cota para o Sofá Retrátil</h3>
+            <p class="text-xs text-muted font-light leading-relaxed mb-4">
+              Para as futuras noites de filmes, séries e pipoca com os amigos em casa.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
+              <span class="font-serif text-lg font-bold text-charcoal">R$ 350,00</span>
+            </div>
+            <button 
+              onclick="openPixModal('Cota para o Sofá Confortável da Sala', 350)"
+              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
+              Presentear
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article data-category="lua-de-mel" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
+        <div class="relative h-44 overflow-hidden bg-linen-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" 
+            alt="Passeio de Barco" 
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
+            Lua de Mel
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Passeio de Barco ao Pôr do Sol</h3>
+            <p class="text-xs text-muted font-light leading-relaxed mb-4">
+              Navegar com vista paradisíaca e fotos perfeitas para guardar pela vida toda.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
+              <span class="font-serif text-lg font-bold text-charcoal">R$ 180,00</span>
+            </div>
+            <button 
+              onclick="openPixModal('Passeio de Barco ao Pôr do Sol', 180)"
+              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
+              Presentear
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article data-category="casa-nova" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
+        <div class="relative h-44 overflow-hidden bg-linen-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80" 
+            alt="Air Fryer e Eletros" 
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
+            Casa Nova
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Air Fryer dos Sonhos</h3>
+            <p class="text-xs text-muted font-light leading-relaxed mb-4">
+              O eletrodoméstico que vai salvar os jantares rápidos e saudáveis dos noivos.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
+              <span class="font-serif text-lg font-bold text-charcoal">R$ 290,00</span>
+            </div>
+            <button 
+              onclick="openPixModal('Air Fryer dos Sonhos', 290)"
+              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
+              Presentear
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 6 -->
+      <article data-category="casa-nova" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
+        <div class="relative h-44 overflow-hidden bg-linen-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80" 
+            alt="Supermercado" 
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
+            Casa Nova
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Primeira Feira do Mês</h3>
+            <p class="text-xs text-muted font-light leading-relaxed mb-4">
+              Para abastecer a despensa com chocolates, café, frutas e tudo que um novo lar precisa!
+            </p>
+          </div>
+          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
+              <span class="font-serif text-lg font-bold text-charcoal">R$ 150,00</span>
+            </div>
+            <button 
+              onclick="openPixModal('Primeira Compra de Supermercado', 150)"
+              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
+              Presentear
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 7 -->
+      <article data-category="experiencias" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
+        <div class="relative h-44 overflow-hidden bg-linen-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600&q=80" 
+            alt="Degustação de Vinhos" 
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
+            Experiências
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Noite dos Vinhos & Queijos</h3>
+            <p class="text-xs text-muted font-light leading-relaxed mb-4">
+              Uma garrafa especial para celebrar as primeiras datas comemorativas do casal.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
+              <span class="font-serif text-lg font-bold text-charcoal">R$ 130,00</span>
+            </div>
+            <button 
+              onclick="openPixModal('Noite dos Vinhos & Queijos', 130)"
+              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
+              Presentear
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 8 -->
+      <article data-category="lua-de-mel" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
+        <div class="relative h-44 overflow-hidden bg-linen-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" 
+            alt="Spa do Casal" 
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
+            Lua de Mel
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Sessão Relax de Spa a Dois</h3>
+            <p class="text-xs text-muted font-light leading-relaxed mb-4">
+              Massagem relaxante pós-festa para renovar as energias na lua de mel.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
+              <span class="font-serif text-lg font-bold text-charcoal">R$ 260,00</span>
+            </div>
+            <button 
+              onclick="openPixModal('Sessão Relax de Spa a Dois', 260)"
+              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
+              Presentear
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 9 -->
+      <article data-category="experiencias" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
+        <div class="relative h-44 overflow-hidden bg-linen-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80" 
+            alt="Drinques na Praia" 
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
+            Experiências
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Rodada de Drinques Tropicais</h3>
+            <p class="text-xs text-muted font-light leading-relaxed mb-4">
+              Água de coco e coquetéis à beira da piscina para os noivos relaxarem.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
+              <span class="font-serif text-lg font-bold text-charcoal">R$ 80,00</span>
+            </div>
+            <button 
+              onclick="openPixModal('Rodada de Drinques Tropicais', 80)"
+              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
+              Presentear
+            </button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- RODAPÉ SUTIL -->
+  <footer class="mt-auto border-t border-gold/20 py-8 px-4 text-center bg-white/50 backdrop-blur-sm">
+    <div class="max-w-xl mx-auto flex flex-col items-center gap-2">
+      <div class="font-cursive text-3xl text-gold-dark">Maria Eduarda & Davi</div>
+      <p class="text-xs text-muted">Com gratidão e amor por compartilhar este momento tão especial conosco.</p>
+      <p class="text-[11px] text-muted/60 mt-2 font-sans">16.10.2027 • Taguatinga & Brasília, DF</p>
+    </div>
+  </footer>
+
+  <!-- MODAL PIX (COM QR CODE E COPIA-E-COLA) -->
+  <div id="pix-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+    
+    <!-- Caixa do Modal -->
+    <div id="pix-modal-box" class="bg-white w-full max-w-md rounded-3xl p-6 sm:p-7 shadow-modal border border-gold/30 relative flex flex-col items-center transform transition-transform duration-300 modal-enter max-h-[92vh] overflow-y-auto no-scrollbar">
+      
+      <!-- Botão Fechar -->
+      <button 
+        onclick="closePixModal()" 
+        aria-label="Fechar"
+        class="absolute top-4 right-4 text-muted hover:text-charcoal p-1.5 rounded-full hover:bg-linen-dark transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Badge do Topo -->
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold/10 text-gold-dark text-[11px] font-semibold tracking-wider uppercase mb-2">
+        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2L4 7v10l8 5 8-5V7l-8-5zm0 2.2L18 8.1v7.8L12 19.8 6 15.9V8.1L12 4.2zM12 7a5 5 0 100 10 5 5 0 000-10z"/>
+        </svg>
+        Pagamento Instantâneo Pix
+      </div>
+
+      <!-- Título do Presente no Modal -->
+      <h3 id="modal-gift-title" class="font-serif text-xl sm:text-2xl font-bold text-center text-charcoal mb-1">
+        Presente Selecionado
+      </h3>
+
+      <!-- Edição / Exibição do Valor -->
+      <div class="my-3 flex items-center justify-center gap-2">
+        <span class="text-xs uppercase tracking-wider text-muted font-medium">Valor:</span>
+        <div class="flex items-center border border-gold/40 rounded-xl px-3 py-1 bg-linen/50 focus-within:border-gold">
+          <span class="font-serif text-sm font-semibold text-charcoal mr-1">R$</span>
+          <input 
+            type="number" 
+            id="modal-gift-amount" 
+            min="5" 
+            step="5" 
+            class="font-serif text-lg font-bold text-charcoal bg-transparent w-24 outline-none text-center"
+            oninput="updatePixPayload()">
+        </div>
+      </div>
+
+      <!-- QR Code Gerado Dinamicamente -->
+      <div class="relative my-2 p-3 bg-white border border-gold/25 rounded-2xl shadow-sm flex items-center justify-center">
+        <img 
+          id="pix-qrcode-img" 
+          src="" 
+          alt="QR Code Pix" 
+          class="w-44 h-44 object-contain rounded-lg">
+        <div id="qrcode-loading" class="absolute inset-0 bg-white/80 rounded-2xl flex items-center justify-center text-xs text-muted font-medium hidden">
+          Gerando QR Code...
+        </div>
+      </div>
+
+      <!-- Informações dos Beneficiários -->
+      <div class="text-center mb-3">
+        <p class="text-xs text-charcoal font-semibold">Beneficiários: <span class="font-normal text-muted">Maria Eduarda & Davi</span></p>
+        <p class="text-[11px] text-muted mt-0.5">Chave Pix: <span id="pix-key-display" class="font-mono text-charcoal font-medium">noivos.mariaedavi@gmail.com</span></p>
+      </div>
+
+      <!-- Caixa de Código Pix Copia e Cola -->
+      <div class="w-full mb-3">
+        <label class="text-[10px] uppercase tracking-wider text-muted font-semibold block mb-1">Pix Copia e Cola:</label>
+        <div class="relative flex items-center">
+          <input 
+            type="text" 
+            id="pix-copia-cola" 
+            readonly 
+            class="w-full text-xs font-mono bg-linen-dark border border-gold/30 rounded-xl py-2 pl-3 pr-20 text-muted select-all outline-none">
+          <button 
+            id="btn-copy-pix"
+            onclick="copyPixCode()" 
+            class="absolute right-1 px-3 py-1.5 rounded-lg bg-gold hover:bg-gold-hover text-white text-[11px] font-semibold tracking-wider uppercase transition-all duration-200 flex items-center gap-1 shadow-sm">
+            <span id="copy-text">Copiar</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Ações: WhatsApp de Comprovante & Conclusão -->
+      <div class="w-full flex flex-col gap-2 mt-2">
+        <a 
+          id="whatsapp-share-btn" 
+          href="#" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="w-full py-2.5 rounded-xl border border-green-600/40 text-green-700 bg-green-50/60 hover:bg-green-100/60 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.22-1.3c1.41.76 3.01 1.2 4.78 1.2 5.52 0 10-4.48 10-10S17.52 2 12 2zm4.5 14.2c-.22.61-1.28 1.17-1.78 1.22-.47.05-1.07.07-3.32-.86-2.6-1.07-4.24-3.73-4.37-3.9-.13-.17-1.05-1.4-1.05-2.67 0-1.27.67-1.89.9-2.14.24-.26.52-.32.7-.32.17 0 .35 0 .5.01.16.01.38-.06.59.45.22.53.75 1.83.82 1.96.07.14.11.3.02.48-.09.17-.14.28-.27.44-.14.15-.29.35-.41.47-.14.14-.29.29-.12.57.16.29.73 1.21 1.57 1.96 1.08.96 1.99 1.26 2.27 1.4.28.14.44.12.61-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.15.26.1 1.64.77 1.92.91.28.14.47.21.54.33.07.12.07.69-.15 1.3z"/>
+          </svg>
+          Enviar Recadinho / Comprovante
+        </a>
+
+        <button 
+          onclick="closePixModal()" 
+          class="w-full py-2.5 rounded-xl bg-charcoal text-white hover:bg-gold text-xs font-semibold uppercase tracking-wider transition-colors duration-200">
+          Já realizei o Pix
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Configurações dos Noivos
+    const PIX_CONFIG = {
+      chave: "noivos.mariaedavi@gmail.com",
+      beneficiario: "MARIA EDUARDA E DAVI",
+      cidade: "BRASILIA",
+      whatsappTelefone: "5561999999999" // Telefone ilustrativo para envio de carinho no WhatsApp
+    };
+
+    // Estado da Aplicação
+    let currentGift = {
+      title: "",
+      amount: 100
+    };
+
+    /**
+     * Função pura para calcular o CRC16 (Padrão CCITT-FALSE requerido pela especificação BACEN do Pix)
+     */
+    function computeCRC16(payload) {
+      let crc = 0xFFFF;
+      for (let i = 0; i < payload.length; i++) {
+        crc ^= (payload.charCodeAt(i) << 8);
+        for (let j = 0; j < 8; j++) {
+          if ((crc & 0x8000) !== 0) {
+            crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+          } else {
+            crc = (crc << 1) & 0xFFFF;
+          }
+        }
+      }
+      return crc.toString(16).toUpperCase().padStart(4, '0');
+    }
+
+    /**
+     * Montador do padrão EMVCo Payload Pix Copia e Cola Oficial
+     */
+    function generatePixPayload(key, name, city, amount, reference) {
+      const formatField = (id, value) => {
+        const len = value.length.toString().padStart(2, '0');
+        return `${id}${len}${value}`;
+      };
+
+      // 26: Merchant Account Information
+      const gui = formatField('00', 'br.gov.bcb.pix');
+      const pixKey = formatField('01', key);
+      const merchantAccount = formatField('26', `${gui}${pixKey}`);
+
+      const formattedAmount = (amount && parseFloat(amount) > 0) 
+        ? parseFloat(amount).toFixed(2) 
+        : '';
+
+      let payload = [
+        formatField('00', '01'), // Payload Format Indicator
+        merchantAccount,
+        formatField('52', '0000'), // Merchant Category Code
+        formatField('53', '986'),  // Transaction Currency (BRL)
+        formattedAmount ? formatField('54', formattedAmount) : '',
+        formatField('58', 'BR'),   // Country Code
+        formatField('59', name.substring(0, 25)),
+        formatField('60', city.substring(0, 15)),
+        formatField('62', formatField('05', (reference || 'CASAMENTO').replace(/[^a-zA-Z0-9]/g, '').substring(0, 20))), // Additional Data Field
+        '6304' // Checksum Indicator
+      ].join('');
+
+      // Calcula o CRC16 dos bytes anteriores
+      const crc = computeCRC16(payload);
+      return payload + crc;
+    }
+
+    /**
+     * Abre o modal com os dados do presente
+     */
+    function openPixModal(giftTitle, amount, type = 'fixed') {
+      currentGift.title = giftTitle;
+      currentGift.amount = amount || 100;
+
+      const modal = document.getElementById('pix-modal');
+      const modalBox = document.getElementById('pix-modal-box');
+      const titleElem = document.getElementById('modal-gift-title');
+      const amountInput = document.getElementById('modal-gift-amount');
+
+      titleElem.textContent = giftTitle;
+      amountInput.value = currentGift.amount;
+
+      updatePixPayload();
+
+      // Transição suave de abertura
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        modal.classList.remove('opacity-0');
+        modalBox.classList.remove('modal-enter');
+        modalBox.classList.add('modal-enter-active');
+      });
+
+      // Prevenir scroll do body quando modal estiver aberto
+      document.body.style.overflow = 'hidden';
+    }
+
+    /**
+     * Atualiza o código Pix, QR code e link do WhatsApp
+     */
+    function updatePixPayload() {
+      const amountInput = document.getElementById('modal-gift-amount');
+      const qrcodeImg = document.getElementById('pix-qrcode-img');
+      const copiaColaInput = document.getElementById('pix-copia-cola');
+      const whatsappBtn = document.getElementById('whatsapp-share-btn');
+
+      const amountVal = parseFloat(amountInput.value) || 0;
+      currentGift.amount = amountVal;
+
+      // Gera a string do Pix Copia e Cola
+      const pixPayloadString = generatePixPayload(
+        PIX_CONFIG.chave,
+        PIX_CONFIG.beneficiario,
+        PIX_CONFIG.cidade,
+        amountVal,
+        'NOIVOSMD'
+      );
+
+      // Atualiza input com payload completo
+      copiaColaInput.value = pixPayloadString;
+
+      // Gera QR Code via API pública do qrserver
+      const encodedData = encodeURIComponent(pixPayloadString);
+      qrcodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=4&data=${encodedData}`;
+
+      // Configura o link do WhatsApp para envio de carinho
+      const valorFormatado = amountVal > 0 ? ` de R$ ${amountVal.toFixed(2).replace('.', ',')}` : '';
+      const mensagemWhats = `Olá Maria Eduarda e Davi! Acabei de contribuir com o presente "${currentGift.title}"${valorFormatado} para o casamento de vocês. Que Deus abençoe essa nova etapa com muita felicidade! ❤️✨`;
+      whatsappBtn.href = `https://api.whatsapp.com/send?phone=${PIX_CONFIG.whatsappTelefone}&text=${encodeURIComponent(mensagemWhats)}`;
+    }
+
+    /**
+     * Fecha o modal
+     */
+    function closePixModal() {
+      const modal = document.getElementById('pix-modal');
+      const modalBox = document.getElementById('pix-modal-box');
+
+      modalBox.classList.remove('modal-enter-active');
+      modalBox.classList.add('modal-exit');
+      modal.classList.add('opacity-0');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modalBox.classList.remove('modal-exit');
+        modalBox.classList.add('modal-enter');
+        document.body.style.overflow = '';
+      }, 250);
+    }
+
+    /**
+     * Copia o código Pix para a área de transferência
+     */
+    function copyPixCode() {
+      const input = document.getElementById('pix-copia-cola');
+      const copyText = document.getElementById('copy-text');
+      const btn = document.getElementById('btn-copy-pix');
+
+      input.select();
+      input.setSelectionRange(0, 99999);
+
+      // Usar execCommand para assegurar suporte dentro de iframes e navegadores restritos
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(input.value);
+        }
+      }
+
+      // Feedback visual refinado
+      copyText.textContent = "Copiado!";
+      btn.classList.remove('bg-gold', 'hover:bg-gold-hover');
+      btn.classList.add('bg-green-700');
+
+      setTimeout(() => {
+        copyText.textContent = "Copiar";
+        btn.classList.remove('bg-green-700');
+        btn.classList.add('bg-gold', 'hover:bg-gold-hover');
+      }, 2200);
+    }
+
+    /**
+     * Filtro de categorias dos presentes
+     */
+    function filterGifts(category, clickedBtn) {
+      // Atualiza estilo dos botões
+      document.querySelectorAll('.filter-tab').forEach(btn => {
+        btn.classList.remove('bg-gold', 'text-white', 'shadow-sm');
+        btn.classList.add('bg-white', 'border', 'border-gold/25', 'text-muted');
+      });
+
+      clickedBtn.classList.remove('bg-white', 'border', 'border-gold/25', 'text-muted');
+      clickedBtn.classList.add('bg-gold', 'text-white', 'shadow-sm');
+
+      // Filtra os cards com animação simples
+      const cards = document.querySelectorAll('.gift-card');
+      cards.forEach(card => {
+        const itemCategory = card.getAttribute('data-category');
+        if (category === 'todos' || itemCategory === category) {
+          card.style.display = 'flex';
+          card.style.opacity = '0';
+          setTimeout(() => {
+            card.style.opacity = '1';
+          }, 40);
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Fechar modal ao clicar no fundo escurecido
+    document.getElementById('pix-modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePixModal();
+      }
+    });
+
+    // Fechar modal com a tecla Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !document.getElementById('pix-modal').classList.contains('hidden')) {
+        closePixModal();
+      }
+    });
+  </script>
+</body>
+</html>

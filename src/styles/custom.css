@@ -28,6 +28,7 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Animações e transições do Modal Pix */

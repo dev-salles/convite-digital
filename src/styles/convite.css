@@ -14,7 +14,7 @@
 }
 
 /* -------------------------------------------------------------
-   RESET & BASE SETUP
+   RESET & BASE SETUP (MOBILE-FIRST)
    ------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -25,27 +25,29 @@
 }
 
 body {
-  background-color: #E5E5E5; /* Fundo de visualização do navegador */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: var(--bg-linen);
   min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   font-family: 'Montserrat', sans-serif;
   color: var(--text-main);
   -webkit-print-color-adjust: exact !important;
   print-color-adjust: exact !important;
+  overflow-x: hidden;
+  padding: 0;
 }
 
 /* -------------------------------------------------------------
-   CANVAS EXATO DE TELA VERTICAL (1080 x 1920 px)
+   CANVAS DO CONVITE (MOBILE FIRST: 100% FLUIDO NO CELULAR)
    ------------------------------------------------------------- */
 .screen-canvas {
-  width: 1080px;
-  height: 1920px;
-  min-width: 1080px;
-  min-height: 1920px;
-  max-width: 1080px;
-  max-height: 1920px;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  min-height: 100dvh;
   background-color: var(--bg-linen);
   position: relative;
   overflow: hidden;
@@ -53,18 +55,36 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 95px 85px 80px 85px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+  padding: clamp(32px, 7vw, 44px) clamp(18px, 5vw, 26px) clamp(26px, 5vw, 36px) clamp(18px, 5vw, 26px);
+  box-shadow: none;
+  gap: clamp(16px, 3.5vw, 22px);
 }
 
-/* Moldura elegante com filete duplo sutil */
+/* Em telas maiores que celular (Tablet/Desktop), o convite vira um cartão luxuoso centralizado */
+@media (min-width: 640px) {
+  body {
+    background-color: #EDE8E1;
+    justify-content: center;
+    padding: 36px 16px;
+  }
+  .screen-canvas {
+    min-height: auto;
+    border-radius: 28px;
+    padding: 52px 36px 44px 36px;
+    box-shadow: 0 25px 60px rgba(44, 53, 49, 0.12);
+    gap: 26px;
+  }
+}
+
+/* Moldura perimetral elegante com borda dupla sutil */
 .frame-border {
   position: absolute;
-  top: 35px;
-  left: 35px;
-  right: 35px;
-  bottom: 35px;
-  border: 1.5px solid var(--border-subtle);
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
   pointer-events: none;
   z-index: 1;
 }
@@ -72,15 +92,33 @@ body {
 .frame-border::after {
   content: '';
   position: absolute;
-  top: 8px;
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
-  border: 0.5px solid rgba(197, 160, 89, 0.2);
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 0.5px solid rgba(197, 160, 89, 0.18);
+  border-radius: 12px;
+}
+
+@media (min-width: 640px) {
+  .frame-border {
+    top: 18px;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    border-radius: 20px;
+  }
+  .frame-border::after {
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    border-radius: 16px;
+  }
 }
 
 /* -------------------------------------------------------------
-   SEÇÃO DO TOPO: MONOGRAMA & VERSÍCULO
+   1. SEÇÃO DO TOPO: MONOGRAMA & VERSÍCULO
    ------------------------------------------------------------- */
 .header-section {
   width: 100%;
@@ -89,9 +127,9 @@ body {
 }
 
 .monogram-wrapper {
-  margin: 0 auto 30px auto;
-  width: 120px;
-  height: 120px;
+  margin: 0 auto 16px auto;
+  width: 72px;
+  height: 72px;
   border: 1px solid var(--gold-primary);
   border-radius: 50%;
   display: flex;
@@ -103,61 +141,64 @@ body {
 
 .monogram-text {
   font-family: 'Playfair Display', serif;
-  font-size: 34px;
+  font-size: 22px;
   font-weight: 400;
   color: var(--gold-dark);
-  letter-spacing: 5px;
-  text-indent: 5px;
+  letter-spacing: 3px;
+  text-indent: 3px;
 }
 
 .quote-text {
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 23px;
-  line-height: 1.6;
+  font-size: clamp(14px, 3.8vw, 16px);
+  line-height: 1.55;
   color: var(--text-muted);
-  max-width: 720px;
+  max-width: 380px;
   margin: 0 auto;
+  padding: 0 8px;
 }
 
 .quote-ref {
   display: block;
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   color: var(--gold-primary);
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 /* -------------------------------------------------------------
-   SEÇÃO CENTRAL: NOMES DOS NOIVOS
+   2. SEÇÃO CENTRAL: NOMES DOS NOIVOS
    ------------------------------------------------------------- */
 .names-section {
   width: 100%;
   text-align: center;
   z-index: 2;
-  margin: 20px 0;
+  margin: 4px 0;
 }
 
 .invitation-intro {
-  font-size: 16px;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 7px;
+  letter-spacing: 3px;
   color: var(--text-muted);
-  margin-bottom: 25px;
-  font-weight: 400;
+  margin-bottom: 12px;
+  font-weight: 500;
+  padding: 0 10px;
+  line-height: 1.4;
 }
 
 .couple-names {
   font-family: 'Alex Brush', cursive;
-  font-size: 110px;
+  font-size: clamp(38px, 12vw, 64px);
   color: var(--text-main);
   line-height: 1.15;
   font-weight: 400;
-  padding: 0 20px;
+  padding: 0 8px;
   text-shadow: 0 2px 4px rgba(44, 53, 49, 0.04);
 }
 
@@ -165,38 +206,37 @@ body {
   display: block;
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 42px;
+  font-size: clamp(20px, 5.5vw, 28px);
   color: var(--gold-primary);
-  margin: -10px 0;
+  margin: -6px 0;
 }
 
 .ornament-divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  margin-top: 35px;
+  gap: 12px;
+  margin-top: 14px;
 }
 
 .ornament-line {
-  width: 110px;
+  width: 50px;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
 }
 
 .ornament-diamond {
-  width: 7px;
-  height: 7px;
+  width: 5px;
+  height: 5px;
   background-color: var(--gold-primary);
   transform: rotate(45deg);
 }
 
 /* -------------------------------------------------------------
-   SEÇÃO DE DETALHES: DATA & LOCAIS
+   3. SEÇÃO DE DETALHES: DATA & LOCAIS
    ------------------------------------------------------------- */
 .details-section {
   width: 100%;
-  max-width: 860px;
   text-align: center;
   z-index: 2;
 }
@@ -206,90 +246,96 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 45px;
+  margin-bottom: 16px;
 }
 
 .date-day-week {
-  font-size: 16px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 6px;
+  letter-spacing: 3.5px;
   color: var(--gold-dark);
-  font-weight: 500;
-  margin-bottom: 4px;
+  font-weight: 600;
+  margin-bottom: 2px;
 }
 
 .date-highlight {
   font-family: 'Playfair Display', serif;
-  font-size: 40px;
+  font-size: clamp(17px, 4.8vw, 23px);
   font-weight: 600;
-  letter-spacing: 3px;
+  letter-spacing: clamp(1px, 0.4vw, 2px);
   color: var(--text-main);
 }
 
 .events-grid {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
   width: 100%;
 }
 
+@media (min-width: 440px) {
+  .events-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
 .event-card {
-  flex: 1;
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(197, 160, 89, 0.25);
-  border-radius: 12px;
-  padding: 30px 20px;
-  box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(4px);
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  border-radius: 14px;
+  padding: 16px 12px;
+  box-shadow: 0 4px 15px rgba(44, 53, 49, 0.04);
+  backdrop-filter: blur(6px);
 }
 
 .event-icon {
-  width: 32px;
-  height: 32px;
-  margin: 0 auto 14px auto;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto 8px auto;
   color: var(--gold-primary);
 }
 
 .event-title {
-  font-size: 15px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   color: var(--gold-dark);
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .event-time {
   font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  font-weight: 600;
-  color: var(--text-main);
-  margin-bottom: 8px;
-}
-
-.event-place {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-main);
   margin-bottom: 4px;
 }
 
+.event-place {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 2px;
+}
+
 .event-city {
-  font-size: 14px;
+  font-size: 11px;
   color: var(--text-muted);
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 /* -------------------------------------------------------------
-   SEÇÃO DOS BOTÕES DE AÇÃO INTERATIVOS
+   4. SEÇÃO DOS BOTÕES DE AÇÃO INTERATIVOS
    ------------------------------------------------------------- */
 .actions-section {
   width: 100%;
-  max-width: 760px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   z-index: 2;
+  margin-top: 4px;
 }
 
 .btn {
@@ -297,31 +343,45 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 64px;
-  border-radius: 32px;
+  height: 48px;
+  min-height: 48px;
+  border-radius: 24px;
   text-decoration: none;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 2.5px;
+  font-size: clamp(10.5px, 2.7vw, 11.5px);
+  font-weight: 600;
+  letter-spacing: clamp(1px, 0.3vw, 1.5px);
   text-transform: uppercase;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   cursor: pointer;
+  padding: 0 clamp(12px, 3vw, 16px);
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.98);
 }
 
 .btn-svg {
-  width: 18px;
-  height: 18px;
-  margin-right: 12px;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
   fill: currentColor;
+  flex-shrink: 0;
 }
 
 /* Botão Principal Dourado (RSVP) */
 .btn-primary {
   background: linear-gradient(135deg, #D4AF67 0%, #B88E44 100%);
   color: #FFFFFF;
-  box-shadow: 0 8px 20px rgba(184, 142, 68, 0.28);
+  box-shadow: 0 6px 18px rgba(184, 142, 68, 0.28);
   font-weight: 600;
   border: 1px solid #D4AF67;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #DFBD7A 0%, #A57E37 100%);
+  box-shadow: 0 8px 22px rgba(184, 142, 68, 0.35);
 }
 
 /* Botões Secundários Elegantes em Contorno */
@@ -329,7 +389,7 @@ body {
   background-color: #FFFFFF;
   color: var(--text-main);
   border: 1.5px solid var(--border-subtle);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
 }
 
 .btn-outline:hover {
@@ -343,13 +403,12 @@ body {
    ------------------------------------------------------------- */
 @media print {
   @page {
-    size: 1080px 1920px;
-    margin: 0;
+    size: auto;
+    margin: 10mm;
   }
   
   html, body {
-    width: 1080px;
-    height: 1920px;
+    width: 100%;
     margin: 0;
     padding: 0;
     background: transparent !important;
@@ -359,14 +418,12 @@ body {
 
   .screen-canvas {
     box-shadow: none !important;
-    margin: 0 !important;
-    width: 1080px !important;
-    height: 1920px !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
     page-break-after: avoid;
     page-break-inside: avoid;
   }
 
-  /* Garante que links permaneçam clicáveis sem decorações estranhas de impressão */
   a {
     text-decoration: none !important;
     color: inherit;

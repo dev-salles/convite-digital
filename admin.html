@@ -117,26 +117,27 @@
   <div id="admin-dashboard" class="hidden min-h-screen flex flex-col">
     
     <!-- BARRA SUPERIOR DO PAINEL -->
-    <header class="bg-white/85 backdrop-blur-md border-b border-gold/25 sticky top-0 z-40 px-4 py-3">
-      <div class="max-w-6xl mx-auto flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full border border-gold bg-linen text-gold-dark font-serif font-bold text-xs flex items-center justify-center">
+    <!-- BARRA SUPERIOR DO PAINEL -->
+    <header class="bg-white/85 backdrop-blur-md border-b border-gold/25 sticky top-0 z-40 px-3 sm:px-4 py-2.5 sm:py-3">
+      <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gold bg-linen text-gold-dark font-serif font-bold text-xs flex items-center justify-center flex-shrink-0">
             M&D
           </div>
-          <div>
-            <h2 class="text-sm font-serif font-bold text-charcoal">Gestão da Lista de Presentes</h2>
-            <p class="text-[10px] text-muted">Maria Eduarda & Davi • 16.10.2027</p>
+          <div class="min-w-0">
+            <h2 class="text-xs sm:text-sm font-serif font-bold text-charcoal truncate">Gestão de Presentes</h2>
+            <p class="text-[9px] sm:text-[10px] text-muted truncate">Maria Eduarda & Davi</p>
           </div>
         </div>
 
-        <div class="flex items-center gap-2">
-          <a href="lista-de-presentes.html" target="_blank" class="px-3 py-1.5 rounded-lg border border-gold/40 text-gold-dark hover:bg-gold/10 text-xs font-semibold tracking-wider transition-colors">
-            Ver Site no Ar ↗
+        <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+          <a href="lista-de-presentes.html" target="_blank" class="px-2.5 sm:px-3 py-1.5 rounded-lg border border-gold/40 text-gold-dark hover:bg-gold/10 text-[11px] sm:text-xs font-semibold tracking-wider transition-colors whitespace-nowrap">
+            Ver Site ↗
           </a>
           <button 
             id="btn-logout"
             type="button" 
-            class="px-3 py-1.5 rounded-lg bg-charcoal text-white hover:bg-red-700 text-xs font-semibold tracking-wider transition-colors cursor-pointer">
+            class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-charcoal text-white hover:bg-red-700 text-[11px] sm:text-xs font-semibold tracking-wider transition-colors cursor-pointer">
             Sair
           </button>
         </div>
@@ -144,7 +145,7 @@
     </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
-    <main class="max-w-6xl mx-auto w-full px-4 py-8 flex-grow">
+    <main class="max-w-6xl mx-auto w-full px-3 sm:px-4 py-6 sm:py-8 flex-grow">
       
       <!-- RESUMO & MÉTRICAS RÁPIDAS -->
       <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -172,7 +173,7 @@
       </section>
 
       <!-- BARRA DE EXPORTAÇÃO & SINCRONIZAÇÃO PARA A VERCEL -->
-      <section class="bg-gradient-to-r from-white via-linen to-white rounded-2xl p-5 border border-gold/30 shadow-subtle mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <section class="bg-gradient-to-r from-white via-linen to-white rounded-2xl p-4 sm:p-5 border border-gold/30 shadow-subtle mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
           <span class="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-gold-dark bg-gold/15 px-2.5 py-0.5 rounded-full mb-1">
             <span>🚀 Sincronização Vercel / GitHub</span>
@@ -187,22 +188,22 @@
           <button 
             id="btn-download-json"
             type="button"
-            class="px-3.5 py-2 rounded-xl bg-charcoal hover:bg-gold text-white text-xs font-semibold tracking-wider uppercase transition-colors shadow-sm cursor-pointer flex items-center gap-1.5">
+            class="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-charcoal hover:bg-gold text-white text-xs font-semibold tracking-wider uppercase transition-colors shadow-sm cursor-pointer flex items-center justify-center gap-1.5">
             <span>📥 Baixar gifts.json</span>
           </button>
 
           <button 
             id="btn-copy-json"
             type="button"
-            class="px-3.5 py-2 rounded-xl border border-gold text-gold-dark hover:bg-gold hover:text-white text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer">
+            class="w-full sm:w-auto px-3.5 py-2 rounded-xl border border-gold text-gold-dark hover:bg-gold hover:text-white text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer flex items-center justify-center">
             <span id="copy-json-text">📋 Copiar JSON</span>
           </button>
         </div>
       </section>
 
       <!-- BARRA DE AÇÕES: BUSCA, FILTRO E NOVO ITEM -->
-      <section class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <div class="flex items-center gap-2 w-full sm:w-auto">
+      <section class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 mb-6">
+        <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
           <input 
             type="text" 
             id="admin-search-input"
@@ -211,7 +212,7 @@
           
           <select 
             id="admin-category-filter"
-            class="py-2.5 px-3 rounded-xl bg-white border border-gold/30 text-xs text-charcoal outline-none focus:border-gold cursor-pointer">
+            class="py-2.5 px-3 rounded-xl bg-white border border-gold/30 text-xs text-charcoal outline-none focus:border-gold cursor-pointer w-full sm:w-auto">
             <option value="todos">Todas Categorias</option>
             <option value="lua-de-mel">Lua de Mel</option>
             <option value="casa-nova">Casa Nova</option>
@@ -242,7 +243,7 @@
        MODAL DE CADASTRO / EDIÇÃO DE PRESENTE
        ========================================================= -->
   <div id="gift-form-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-charcoal/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-    <div id="gift-form-box" class="bg-white w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-modal border border-gold/30 relative flex flex-col transform transition-transform duration-300 modal-enter max-h-[92vh] overflow-y-auto no-scrollbar">
+    <div id="gift-form-box" class="bg-white w-full max-w-2xl rounded-3xl p-4 sm:p-7 md:p-8 shadow-modal border border-gold/30 relative flex flex-col transform transition-transform duration-300 modal-enter max-h-[88vh] sm:max-h-[90vh] overflow-y-auto no-scrollbar">
       
       <!-- Botão Fechar -->
       <button 

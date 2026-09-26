@@ -10,8 +10,8 @@ O projeto foi construído seguindo os princípios de **Clean Architecture**, **S
 
 ```text
 convite_casamento/
-├── index.html                      # Ponto de entrada web do Convite Digital
-├── convite_digital.html            # Convite Digital com layout mobile vertical (1080x1920)
+├── index.html                      # Ponto de entrada web do Convite Digital (Mobile First)
+├── convite_digital.html            # Convite Digital com layout mobile vertical fluido
 ├── lista-de-presentes.html         # Lista de presentes interativa com cotas Pix e compras físicas
 ├── admin.html                      # 🔒 Painel exclusivo dos noivos (Login e CRUD de presentes)
 ├── gerenciar-imagens.html          # 🖼️ Painel interativo para teste e gestão de imagens locais
@@ -52,17 +52,17 @@ convite_casamento/
     │
     └── styles/                     # Camada de Estilos Desacoplada
         ├── custom.css              # Tokens visuais, animações do modal e resets
-        └── convite.css             # Estilos do convite 1080x1920 e regras de impressão
+        └── convite.css             # Estilos Mobile-First fluidos do convite e regras de impressão
 ```
 
 ---
 
 ## ✨ Funcionalidades Principais
 
-1. **Convite Digital Interativo**:
-   - Layout elegante em proporção vertical (1080x1920) otimizado para celulares e impressão/PDF.
+1. **Convite Digital Interativo (Mobile First)**:
+   - Construído com metodologia **Mobile First**: 100% fluido e adaptável a telas de 320px a 480px (smartphones) e elegante cartão emoldurado em telas maiores.
    - Links diretos com Google Maps da cerimônia (**Igreja Sagrada Família**) e recepção (**Maison Mizuno**).
-   - Botão RSVP conectado ao WhatsApp dos noivos.
+   - Botão RSVP conectado diretamente ao WhatsApp dos noivos com mensagem pré-preenchida.
 
 2. **Lista de Presentes com Duplo Call to Action**:
    - **Opção A (Contribuição Pix)**: Gera QR Code dinâmico e código Pix Copia-e-Cola no padrão oficial do Banco Central.

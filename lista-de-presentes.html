@@ -50,18 +50,18 @@
 <body class="bg-linen min-h-screen text-charcoal flex flex-col selection:bg-gold/20 selection:text-charcoal relative overflow-x-hidden">
 
   <!-- TOPO / HEADER -->
-  <header class="relative pt-12 pb-10 px-4 md:px-8 max-w-4xl mx-auto text-center w-full">
+  <header class="relative pt-8 sm:pt-12 pb-8 sm:pb-10 px-3 sm:px-6 md:px-8 max-w-4xl mx-auto text-center w-full">
     <!-- Moldura sutil decorativa de fundo -->
-    <div class="pointer-events-none absolute inset-x-4 top-6 bottom-4 border border-gold/20 rounded-3xl -z-10"></div>
+    <div class="pointer-events-none absolute inset-x-3 sm:inset-x-4 top-4 sm:top-6 bottom-3 sm:bottom-4 border border-gold/20 rounded-3xl -z-10"></div>
 
     <!-- Monograma Superior -->
-    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full border border-gold bg-white shadow-sm mb-4">
-      <span class="font-serif text-gold-dark text-xl tracking-wider">M&D</span>
+    <div class="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-gold bg-white shadow-sm mb-4">
+      <span class="font-serif text-gold-dark text-lg sm:text-xl tracking-wider">M&D</span>
     </div>
 
     <!-- Nomes com Caligrafia -->
-    <div class="font-cursive text-5xl sm:text-6xl text-charcoal tracking-wide mb-1">
-      Maria Eduarda <span class="text-gold font-serif italic text-3xl sm:text-4xl">&</span> Davi
+    <div class="font-cursive text-4xl sm:text-5xl md:text-6xl text-charcoal tracking-wide mb-1 px-2">
+      Maria Eduarda <span class="text-gold font-serif italic text-2xl sm:text-3xl md:text-4xl">&</span> Davi
     </div>
 
     <!-- Data do Grande Dia -->
@@ -161,8 +161,8 @@
   </footer>
 
   <!-- MODAL PIX (COM QR CODE E COPIA-E-COLA) -->
-  <div id="pix-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-    <div id="pix-modal-box" class="bg-white w-full max-w-md rounded-3xl p-6 sm:p-7 shadow-modal border border-gold/30 relative flex flex-col items-center transform transition-transform duration-300 modal-enter max-h-[92vh] overflow-y-auto no-scrollbar">
+  <div id="pix-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-charcoal/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+    <div id="pix-modal-box" class="bg-white w-full max-w-md rounded-3xl p-5 sm:p-7 shadow-modal border border-gold/30 relative flex flex-col items-center transform transition-transform duration-300 modal-enter max-h-[88vh] sm:max-h-[90vh] overflow-y-auto no-scrollbar">
       
       <!-- Botão Fechar -->
       <button 
@@ -208,7 +208,7 @@
           id="pix-qrcode-img" 
           src="" 
           alt="QR Code Pix" 
-          class="w-44 h-44 object-contain rounded-lg">
+          class="w-36 h-36 sm:w-44 sm:h-44 object-contain rounded-lg">
       </div>
 
       <!-- Informações dos Beneficiários -->
@@ -262,25 +262,25 @@
 
   <!-- MODAL DE DETALHES DO PRODUTO (FOTO COMERCIAL, SPECS & DUPLO CTA) -->
   <div id="product-detail-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-charcoal/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-    <div id="product-modal-box" class="bg-white w-full max-w-2xl rounded-3xl p-5 sm:p-7 shadow-modal border border-gold/30 relative flex flex-col transform transition-transform duration-300 modal-enter max-h-[92vh] overflow-y-auto no-scrollbar">
+    <div id="product-modal-box" class="bg-white w-full max-w-2xl rounded-3xl p-4 sm:p-6 md:p-7 shadow-modal border border-gold/30 relative flex flex-col transform transition-transform duration-300 modal-enter max-h-[88vh] sm:max-h-[90vh] overflow-y-auto no-scrollbar">
       
       <!-- Botão Fechar -->
       <button 
         type="button"
         data-action="close-product-modal"
         aria-label="Fechar detalhes"
-        class="absolute top-4 right-4 z-10 text-muted hover:text-charcoal p-1.5 rounded-full hover:bg-linen-dark transition-colors cursor-pointer bg-white/80 backdrop-blur-sm">
+        class="absolute top-3 sm:top-4 right-3 sm:right-4 z-10 text-muted hover:text-charcoal p-1.5 rounded-full hover:bg-linen-dark transition-colors cursor-pointer bg-white/80 backdrop-blur-sm">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
 
       <!-- Conteúdo em 2 Colunas no Desktop -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 items-start">
         
         <!-- Coluna Esquerda: Imagem em Destaque & Preço -->
         <div class="flex flex-col gap-3">
-          <div class="relative h-60 sm:h-72 w-full rounded-2xl overflow-hidden bg-white border border-gold/25 shadow-sm flex items-center justify-center p-3 sm:p-4">
+          <div class="relative h-52 sm:h-64 md:h-72 w-full rounded-2xl overflow-hidden bg-white border border-gold/25 shadow-sm flex items-center justify-center p-3 sm:p-4">
             <img 
               id="pm-image" 
               src="" 
@@ -302,14 +302,14 @@
           </div>
 
           <!-- Bloco: Valor Sugerido e Badge de Cota/Tipo (Hierarquia Vertical) -->
-          <div class="bg-linen/60 rounded-2xl p-4 border border-gold/20 flex flex-col items-start gap-1.5 shadow-2xs">
+          <div class="bg-linen/60 rounded-2xl p-3.5 sm:p-4 border border-gold/20 flex flex-col items-start gap-1 shadow-2xs">
             <span class="text-[10px] uppercase font-semibold tracking-wider text-muted block">
               Valor Sugerido
             </span>
             <span id="pm-price" class="font-serif text-2xl sm:text-3xl font-bold text-charcoal tracking-tight leading-tight">
               R$ 0,00
             </span>
-            <span id="pm-type-badge" class="w-fit inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-sky-50 text-sky-800 border border-sky-200 mt-1">
+            <span id="pm-type-badge" class="w-fit inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-2.5 sm:px-3 py-1 rounded-full bg-sky-50 text-sky-800 border border-sky-200 mt-1">
               ✈️ Cota de Experiência / Viagem
             </span>
           </div>
@@ -420,7 +420,7 @@
           <button 
             id="pm-btn-copy-address"
             type="button"
-            class="px-3 py-1.5 rounded-lg border border-gold/40 hover:border-gold bg-white text-gold-dark hover:bg-gold/10 text-[11px] font-semibold whitespace-nowrap transition-colors flex items-center gap-1 cursor-pointer">
+            class="w-full sm:w-auto px-3 py-2 rounded-lg border border-gold/40 hover:border-gold bg-white text-gold-dark hover:bg-gold/10 text-[11px] font-semibold whitespace-nowrap transition-colors flex items-center justify-center gap-1 cursor-pointer">
             <span id="pm-copy-address-text">Copiar Endereço</span>
           </button>
         </div>

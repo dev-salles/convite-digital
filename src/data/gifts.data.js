@@ -28,13 +28,28 @@
       }
 
       _loadPromise = (async () => {
+        // 0. Limpeza preventiva de chaves legadas de imagem no localStorage
+        this.cleanupOversizeStorage();
+
         // 1. Tentar ler do localStorage (alterações feitas na Área dos Noivos)
         if (typeof localStorage !== 'undefined') {
           const stored = localStorage.getItem(STORAGE_KEY);
           if (stored) {
             try {
-              const parsed = JSON.parse(stored);
+              let parsed = JSON.parse(stored);
               if (Array.isArray(parsed) && parsed.length > 0) {
+                // Se o cache local contiver imagens gigantes (>200KB base64), sanitiza para proteger a cota
+                const hasOversizeBase64 = parsed.some(g =>
+                  (g.imageUrl && g.imageUrl.length > 200000) ||
+                  (g.modalImageUrl && g.modalImageUrl.length > 200000) ||
+                  (g.remoteImageUrl && g.remoteImageUrl.length > 200000)
+                );
+                if (hasOversizeBase64) {
+                  parsed = this.sanitizeList(parsed);
+                  try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+                  } catch (e) {}
+                }
                 _cachedGifts = parsed;
                 return _cachedGifts;
               }
@@ -200,13 +215,69 @@
     },
 
     /**
-     * Salva a lista no localStorage do navegador
+     * Sanitiza a lista para garantir que imagens base64 gigantes não estourem o localStorage
+     * @param {Array} list
+     * @returns {Array}
+     */
+    sanitizeList(list) {
+      if (!Array.isArray(list)) return [];
+      return list.map(item => {
+        const clean = { ...item };
+        ['imageUrl', 'modalImageUrl', 'remoteImageUrl'].forEach(field => {
+          if (typeof clean[field] === 'string' && clean[field].startsWith('data:image') && clean[field].length > 200000) {
+            clean[field] = clean.localImageUrl || (field === 'modalImageUrl' ? '' : 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80');
+          }
+        });
+        return clean;
+      });
+    },
+
+    /**
+     * Limpa chaves legadas ou excessivamente pesadas (>150KB) do localStorage para liberar cota
+     */
+    cleanupOversizeStorage() {
+      if (typeof localStorage === 'undefined') return;
+      try {
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (!key) continue;
+          if (key.startsWith('wedding_gift_img_') || key.startsWith('wedding_gift_modal_img_')) {
+            const val = localStorage.getItem(key);
+            if (val && val.length > 150000) {
+              keysToRemove.push(key);
+            }
+          }
+        }
+        keysToRemove.forEach(k => {
+          console.warn('[GiftsRepository] Removendo chave de imagem legada pesada do localStorage:', k);
+          localStorage.removeItem(k);
+        });
+      } catch (e) {
+        console.warn('[GiftsRepository] Falha ao verificar cota de armazenamento:', e);
+      }
+    },
+
+    /**
+     * Salva a lista no localStorage do navegador com proteção de QuotaExceededError
      * @param {Array} list
      */
     save(list) {
       _cachedGifts = list;
       if (typeof localStorage !== 'undefined') {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        } catch (e) {
+          console.warn('[GiftsRepository] QuotaExceededError detectado no localStorage. Executando sanitização preventiva...', e);
+          try {
+            const sanitized = this.sanitizeList(list);
+            _cachedGifts = sanitized;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(sanitized));
+            console.info('[GiftsRepository] Lista salva com sucesso no localStorage após sanitização.');
+          } catch (innerErr) {
+            console.error('[GiftsRepository] Impossível gravar no localStorage mesmo após sanitização. As alterações permanecerão ativas em memória.', innerErr);
+          }
+        }
       }
     },
 

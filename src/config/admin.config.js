@@ -4,7 +4,7 @@
 (function (global) {
   const ADMIN_CONFIG = {
     // Senha padrão de acesso dos noivos (altere conforme sua preferência)
-    adminPassword: "noivos.mariaedavi",
+    adminPassword: "noivos@dudaedavi123#",
     sessionKey: "wedding_admin_session_auth",
     sessionDurationHours: 24,
 

@@ -32,9 +32,9 @@ convite_casamento/
     │       ├── crc16.js            # Algoritmo matemático puro de CRC16 (CCITT-FALSE 0xFFFF)
     │       └── pixPayload.js       # Montador do padrão EMVCo BR Code (BACEN)
     │
-    ├── data/                       # Camada de Dados (Repository Pattern)
-    │   ├── gifts.json              # Base de dados estruturada dos presentes
-    │   └── gifts.data.js           # GiftsRepository com suporte a CRUD, filtros e persistência
+    ├── data/                       # Camada de Dados (Repository Pattern & SSOT)
+    │   ├── gifts.json              # Base de dados oficial dos presentes (Fonte Única da Verdade)
+    │   └── gifts.data.js           # GiftsRepository: consome gifts.json via fetch, gerencia cache e CRUD
     │
     ├── services/                   # Adaptadores de Serviços Externos e I/O
     │   ├── clipboardService.js     # Cópia para área de transferência resiliente com fallback

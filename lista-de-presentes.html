@@ -280,28 +280,37 @@
         
         <!-- Coluna Esquerda: Imagem em Destaque & Preço -->
         <div class="flex flex-col gap-3">
-          <div class="relative h-60 sm:h-72 w-full rounded-2xl overflow-hidden bg-linen-dark border border-gold/25 shadow-sm">
+          <div class="relative h-60 sm:h-72 w-full rounded-2xl overflow-hidden bg-white border border-gold/25 shadow-sm flex items-center justify-center p-3 sm:p-4">
             <img 
               id="pm-image" 
               src="" 
               alt="Foto do Produto" 
-              class="w-full h-full object-cover">
+              class="w-full h-full object-contain transition-transform duration-300 hover:scale-105">
             
-            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-              <span id="pm-category-badge" class="bg-white/95 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full shadow-sm">
+            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5 pointer-events-none">
+              <span id="pm-category-badge" class="bg-white/95 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full shadow-sm border border-gold/20">
                 Categoria
               </span>
             </div>
+
+            <span class="absolute bottom-3 right-3 bg-linen/95 backdrop-blur-sm text-[9px] uppercase tracking-wider font-medium text-muted px-2 py-0.5 rounded-md border border-gold/20 shadow-2xs pointer-events-none flex items-center gap-1">
+              <svg class="w-3 h-3 text-gold-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+              <span>Foto Oficial do Produto</span>
+            </span>
           </div>
 
-          <!-- Valor e Tipo -->
-          <div class="bg-linen/60 rounded-xl p-3 border border-gold/20 flex items-center justify-between">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block font-medium">Valor Sugerido</span>
-              <span id="pm-price" class="font-serif text-2xl font-bold text-charcoal">R$ 0,00</span>
-            </div>
-            <span id="pm-type-badge" class="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-              Opção Física ou Pix
+          <!-- Bloco: Valor Sugerido e Badge de Cota/Tipo (Hierarquia Vertical) -->
+          <div class="bg-linen/60 rounded-2xl p-4 border border-gold/20 flex flex-col items-start gap-1.5 shadow-2xs">
+            <span class="text-[10px] uppercase font-semibold tracking-wider text-muted block">
+              Valor Sugerido
+            </span>
+            <span id="pm-price" class="font-serif text-2xl sm:text-3xl font-bold text-charcoal tracking-tight leading-tight">
+              R$ 0,00
+            </span>
+            <span id="pm-type-badge" class="w-fit inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-sky-50 text-sky-800 border border-sky-200 mt-1">
+              ✈️ Cota de Experiência / Viagem
             </span>
           </div>
         </div>

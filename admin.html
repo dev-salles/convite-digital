@@ -332,24 +332,69 @@
             class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
         </div>
 
-        <!-- Foto do Presente (URL ou Arquivo Local) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-          <div>
-            <label class="font-semibold text-charcoal block mb-1">URL da Imagem</label>
-            <input 
-              type="url" 
-              id="gift-image-url" 
-              placeholder="https://... ou images/gifts/item.jpg" 
-              class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
+        <!-- Foto 1: Vitrine / Card Principal -->
+        <div class="bg-linen-dark/30 p-3.5 rounded-xl border border-gold/20 flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <label class="font-semibold text-charcoal block">1. Foto da Vitrine / Card (Estilo de Vida / Ambiente)</label>
+            <span class="text-[9px] bg-linen-dark text-muted font-bold px-2 py-0.5 rounded border border-gold/20">Grade Principal</span>
           </div>
-          <div>
-            <label class="font-semibold text-charcoal block mb-1">Ou Escolher Imagem do PC</label>
-            <input 
-              type="file" 
-              id="gift-image-file" 
-              accept="image/*"
-              class="w-full text-xs text-muted file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gold file:text-white hover:file:bg-gold-hover cursor-pointer">
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+            <!-- Thumbnail Preview -->
+            <div class="sm:col-span-3 h-20 rounded-lg overflow-hidden bg-white border border-gold/30 flex items-center justify-center">
+              <img id="form-card-preview" src="images/gifts/air-fryer.jpg" alt="Preview Card" class="w-full h-full object-cover">
+            </div>
+            <!-- Inputs -->
+            <div class="sm:col-span-9 flex flex-col gap-1.5">
+              <input 
+                type="text" 
+                id="gift-image-url" 
+                placeholder="https://... ou images/gifts/item.jpg" 
+                class="w-full py-1.5 px-3 rounded-lg bg-white border border-gold/30 text-charcoal focus:border-gold outline-none text-xs">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] text-muted whitespace-nowrap">Ou do PC:</span>
+                <input 
+                  type="file" 
+                  id="gift-image-file" 
+                  accept="image/*"
+                  class="w-full text-xs text-muted file:mr-2 file:py-1 file:px-2.5 file:rounded-md file:border-0 file:text-[10px] file:font-semibold file:bg-gold file:text-white hover:file:bg-gold-hover cursor-pointer">
+              </div>
+            </div>
           </div>
+          <span class="text-[10px] text-muted italic">A foto que convida: foto do produto no ambiente, mesa posta, etc.</span>
+        </div>
+
+        <!-- Foto 2: Modal de Detalhes (Fundo Branco / Loja Digital) -->
+        <div class="bg-white p-3.5 rounded-xl border-2 border-gold/40 shadow-sm flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <label class="font-semibold text-charcoal block">2. Foto do Modal (Fundo Branco / Loja Oficial)</label>
+              <span class="text-[9px] bg-amber-100 text-amber-900 font-bold px-1.5 py-0.5 rounded">Packshot Oficial</span>
+            </div>
+            <span class="text-[10px] text-gold-dark font-medium">🛍️ Estilo E-commerce</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+            <!-- Thumbnail Preview Packshot -->
+            <div class="sm:col-span-3 h-20 rounded-lg overflow-hidden bg-white border border-gold/40 p-1 flex items-center justify-center shadow-inner">
+              <img id="form-modal-preview" src="https://walitastore.vtexassets.com/arquivos/ids/160828/NA130_Garantia.jpg?v=638741797596300000" alt="Preview Modal Packshot" class="w-full h-full object-contain">
+            </div>
+            <!-- Inputs -->
+            <div class="sm:col-span-9 flex flex-col gap-1.5">
+              <input 
+                type="text" 
+                id="gift-modal-image-url" 
+                placeholder="Cole o link da foto na Amazon, Magalu ou VTEX com fundo branco..." 
+                class="w-full py-1.5 px-3 rounded-lg bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none text-xs">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] text-muted whitespace-nowrap">Ou do PC:</span>
+                <input 
+                  type="file" 
+                  id="gift-modal-image-file" 
+                  accept="image/*"
+                  class="w-full text-xs text-muted file:mr-2 file:py-1 file:px-2.5 file:rounded-md file:border-0 file:text-[10px] file:font-semibold file:bg-charcoal file:text-white hover:file:bg-gold cursor-pointer">
+              </div>
+            </div>
+          </div>
+          <span class="text-[10px] text-muted italic">💡 Dica: Na página da loja (ex: Amazon ou Magalu), clique com o botão direito na foto do produto com fundo branco e escolha "Copiar endereço da imagem".</span>
         </div>
 
         <!-- Descrição Breve -->
@@ -466,10 +511,13 @@
       }
 
       // 1. Controle de Autenticação
-      function checkAuth() {
+      async function checkAuth() {
         if (ADMIN_CONFIG.isAuthenticated()) {
           loginScreen.classList.add('hidden');
           adminDashboard.classList.remove('hidden');
+          if (GiftsRepository && GiftsRepository.load) {
+            await GiftsRepository.load();
+          }
           renderDashboard();
         } else {
           loginScreen.classList.remove('hidden');
@@ -546,12 +594,13 @@
           card.className = 'bg-white rounded-2xl border border-gold/25 p-5 shadow-subtle flex flex-col justify-between';
           
           const valorFormatado = Number(gift.price || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-          const imageSrc = gift.imageUrl || gift.remoteImageUrl;
+          const cardImg = localStorage.getItem('wedding_gift_img_' + gift.id) || gift.imageUrl || gift.remoteImageUrl;
+          const modalImg = localStorage.getItem('wedding_gift_modal_img_' + gift.id) || gift.modalImageUrl || cardImg;
 
           card.innerHTML = `
             <div>
               <div class="flex items-center justify-between mb-3">
-                <span class="text-[10px] uppercase font-semibold text-gold-dark bg-gold/10 px-2 py-0.5 rounded-full">
+                <span class="text-[10px] uppercase font-semibold text-gold-dark bg-gold/10 px-2.5 py-0.5 rounded-full">
                   ${gift.categoryLabel}
                 </span>
                 <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full ${gift.isPhysical ? 'bg-amber-100 text-amber-900' : 'bg-blue-100 text-blue-900'}">
@@ -559,12 +608,33 @@
                 </span>
               </div>
 
-              <div class="relative h-40 rounded-xl overflow-hidden bg-linen-dark mb-3 border border-gold/20">
-                <img 
-                  src="${imageSrc}" 
-                  alt="${gift.title}"
-                  onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = '${gift.remoteImageUrl}'; }"
-                  class="w-full h-full object-cover">
+              <!-- Pré-visualização Dupla: Card vs Modal -->
+              <div class="grid grid-cols-2 gap-2 mb-3">
+                <div class="flex flex-col">
+                  <span class="text-[9px] uppercase tracking-wider text-muted font-bold mb-1 flex items-center gap-1">
+                    <span>🖼️ Vitrine (Card)</span>
+                  </span>
+                  <div class="h-28 rounded-xl overflow-hidden bg-linen-dark border border-gold/20">
+                    <img 
+                      src="${cardImg}" 
+                      alt="${gift.title}"
+                      onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = '${gift.remoteImageUrl}'; }"
+                      class="w-full h-full object-cover">
+                  </div>
+                </div>
+
+                <div class="flex flex-col">
+                  <span class="text-[9px] uppercase tracking-wider text-gold-dark font-bold mb-1 flex items-center gap-1">
+                    <span>🛍️ Modal (Fundo Branco)</span>
+                  </span>
+                  <div class="h-28 rounded-xl overflow-hidden bg-white border-2 border-gold/30 p-1.5 flex items-center justify-center shadow-inner">
+                    <img 
+                      src="${modalImg}" 
+                      alt="${gift.title} (Modal)"
+                      onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = '${cardImg}'; }"
+                      class="w-full h-full object-contain">
+                  </div>
+                </div>
               </div>
 
               <h4 class="font-serif font-bold text-base text-charcoal mb-0.5">${gift.title}</h4>
@@ -607,10 +677,52 @@
       searchInput.addEventListener('input', renderDashboard);
       categoryFilter.addEventListener('change', renderDashboard);
 
+      // Função para sincronizar previews ao vivo no formulário
+      function updateFormPreviews() {
+        const cardUrl = document.getElementById('gift-image-url').value.trim() || 'images/gifts/air-fryer.jpg';
+        const modalUrl = document.getElementById('gift-modal-image-url').value.trim() || cardUrl;
+        
+        const cardPreview = document.getElementById('form-card-preview');
+        const modalPreview = document.getElementById('form-modal-preview');
+
+        if (cardPreview) cardPreview.src = cardUrl;
+        if (modalPreview) modalPreview.src = modalUrl;
+      }
+
+      document.getElementById('gift-image-url').addEventListener('input', updateFormPreviews);
+      document.getElementById('gift-modal-image-url').addEventListener('input', updateFormPreviews);
+
+      document.getElementById('gift-image-file').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            const preview = document.getElementById('form-card-preview');
+            if (preview) preview.src = ev.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      document.getElementById('gift-modal-image-file').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            const preview = document.getElementById('form-modal-preview');
+            if (preview) preview.src = ev.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
       // 3. Modal de Cadastro e Edição
       function openAddModal() {
         formGift.reset();
         document.getElementById('gift-id').value = '';
+        document.getElementById('gift-image-url').value = '';
+        document.getElementById('gift-modal-image-url').value = '';
+        updateFormPreviews();
         modalTitle.textContent = "Adicionar Novo Presente";
         openModal();
       }
@@ -623,11 +735,13 @@
         document.getElementById('gift-is-physical').value = gift.isPhysical ? 'true' : 'false';
         document.getElementById('gift-model').value = gift.productModel || '';
         document.getElementById('gift-image-url').value = gift.imageUrl || gift.remoteImageUrl || '';
+        document.getElementById('gift-modal-image-url').value = gift.modalImageUrl || '';
         document.getElementById('gift-desc').value = gift.description || '';
         document.getElementById('gift-affective').value = gift.affectiveNote || '';
         document.getElementById('gift-store-name').value = gift.storeName || '';
         document.getElementById('gift-store-url').value = gift.storeUrl || '';
 
+        updateFormPreviews();
         modalTitle.textContent = "Editar Presente: " + gift.title;
         openModal();
       }
@@ -662,7 +776,7 @@
       });
 
       // Salvar Presente (Novo ou Editado)
-      formGift.addEventListener('submit', (e) => {
+      formGift.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const id = document.getElementById('gift-id').value;
@@ -676,54 +790,69 @@
         const storeName = document.getElementById('gift-store-name').value.trim();
         const storeUrl = document.getElementById('gift-store-url').value.trim() || null;
         let imageUrl = document.getElementById('gift-image-url').value.trim();
+        let modalImageUrl = document.getElementById('gift-modal-image-url').value.trim();
 
         const fileInput = document.getElementById('gift-image-file');
-        
-        const saveOperation = (finalImageUrl) => {
-          const giftData = {
-            title,
-            category,
-            price,
-            isPhysical,
-            productModel: productModel || title,
-            description,
-            affectiveNote,
-            storeName,
-            storeUrl,
-            imageUrl: finalImageUrl || "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
-            remoteImageUrl: finalImageUrl || "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80"
-          };
+        const modalFileInput = document.getElementById('gift-modal-image-file');
 
-          if (id) {
-            // Edição
-            GiftsRepository.update(id, giftData);
-            notify(`"${title}" atualizado com sucesso!`);
-          } else {
-            // Criação
-            GiftsRepository.add(giftData);
-            notify(`"${title}" adicionado à lista!`);
-          }
-
-          closeModal();
-          renderDashboard();
+        // Função auxiliar para ler arquivo como Data URL
+        const readFileAsDataUrl = (file) => {
+          return new Promise((resolve) => {
+            if (!file) return resolve(null);
+            const reader = new FileReader();
+            reader.onload = (ev) => resolve(ev.target.result);
+            reader.readAsDataURL(file);
+          });
         };
 
-        // Se escolheu arquivo local, converter para Base64 antes de salvar
-        if (fileInput.files && fileInput.files[0]) {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            saveOperation(event.target.result);
-          };
-          reader.readAsDataURL(fileInput.files[0]);
+        const cardFileData = fileInput.files && fileInput.files[0] ? await readFileAsDataUrl(fileInput.files[0]) : null;
+        const modalFileData = modalFileInput.files && modalFileInput.files[0] ? await readFileAsDataUrl(modalFileInput.files[0]) : null;
+
+        const finalCardImage = cardFileData || imageUrl || "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80";
+        const finalModalImage = modalFileData || modalImageUrl || finalCardImage;
+
+        const giftData = {
+          title,
+          category,
+          price,
+          isPhysical,
+          productModel: productModel || title,
+          description,
+          affectiveNote,
+          storeName,
+          storeUrl,
+          imageUrl: finalCardImage,
+          modalImageUrl: finalModalImage,
+          remoteImageUrl: finalCardImage
+        };
+
+        if (id) {
+          // Edição
+          GiftsRepository.update(id, giftData);
+          if (finalModalImage) localStorage.setItem('wedding_gift_modal_img_' + id, finalModalImage);
+          if (finalCardImage) localStorage.setItem('wedding_gift_img_' + id, finalCardImage);
+          notify(`"${title}" atualizado com sucesso!`);
         } else {
-          saveOperation(imageUrl);
+          // Criação
+          const created = GiftsRepository.add(giftData);
+          const targetId = (created && created.id) ? created.id : null;
+          if (targetId) {
+            if (finalModalImage) localStorage.setItem('wedding_gift_modal_img_' + targetId, finalModalImage);
+            if (finalCardImage) localStorage.setItem('wedding_gift_img_' + targetId, finalCardImage);
+          }
+          notify(`"${title}" adicionado à lista!`);
         }
+
+        closeModal();
+        renderDashboard();
       });
 
       // Excluir Item
       function deleteGiftItem(id, title) {
         if (confirm(`Deseja realmente excluir "${title}" da lista de presentes?`)) {
           GiftsRepository.delete(id);
+          localStorage.removeItem('wedding_gift_img_' + id);
+          localStorage.removeItem('wedding_gift_modal_img_' + id);
           notify(`"${title}" foi removido.`);
           renderDashboard();
         }

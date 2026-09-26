@@ -98,10 +98,10 @@
       
       if (this.dom.typeBadge) {
         if (gift.isPhysical) {
-          this.dom.typeBadge.className = 'text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200';
+          this.dom.typeBadge.className = 'w-fit inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 mt-0.5 shadow-2xs';
           this.dom.typeBadge.textContent = '📦 Opção Física ou Pix';
         } else {
-          this.dom.typeBadge.className = 'text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200';
+          this.dom.typeBadge.className = 'w-fit inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-sky-50 text-sky-800 border border-sky-200 mt-0.5 shadow-2xs';
           this.dom.typeBadge.textContent = '✈️ Cota de Experiência / Viagem';
         }
       }
@@ -123,10 +123,17 @@
         }
       }
 
-      // 3. Imagem
+      // 3. Imagem Comercial do Produto no Modal (Prioridade: foto comercial com fundo branco da loja)
       if (this.dom.image) {
-        const savedImage = (typeof localStorage !== 'undefined') ? localStorage.getItem('wedding_gift_img_' + gift.id) : null;
-        const initialSrc = savedImage || gift.localImageUrl || gift.remoteImageUrl || gift.imageUrl;
+        const savedModalImage = (typeof localStorage !== 'undefined') ? localStorage.getItem('wedding_gift_modal_img_' + gift.id) : null;
+        const savedCardImage = (typeof localStorage !== 'undefined') ? localStorage.getItem('wedding_gift_img_' + gift.id) : null;
+        
+        // Hierarquia de busca da imagem do modal:
+        // 1. Imagem do modal personalizada salva no navegador
+        // 2. modalImageUrl configurada no presente (fundo branco / e-commerce)
+        // 3. Imagem do card salva no navegador
+        // 4. localImageUrl ou remoteImageUrl ou imageUrl
+        const initialSrc = savedModalImage || gift.modalImageUrl || savedCardImage || gift.localImageUrl || gift.remoteImageUrl || gift.imageUrl;
         const fallbackSrc = gift.remoteImageUrl || gift.imageUrl;
 
         this.dom.image.src = initialSrc;

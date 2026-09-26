@@ -1,0 +1,55 @@
+/* -------------------------------------------------------------
+   ESTILOS GLOBAIS & DESIGN TOKENS DA LISTA DE PRESENTES
+   ------------------------------------------------------------- */
+
+:root {
+  --color-linen: #FBF9F5;
+  --color-linen-dark: #F3EFEA;
+  --color-charcoal: #2C3531;
+  --color-muted: #636D67;
+  --color-gold: #C5A059;
+  --color-gold-light: #E6D7B9;
+  --color-gold-hover: #B58E45;
+  --color-gold-dark: #93702B;
+}
+
+body {
+  background-color: var(--color-linen);
+  color: var(--color-charcoal);
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ocultar barra de rolagem horizontal nos filtros do mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Animações e transições do Modal Pix */
+.modal-enter {
+  opacity: 0;
+  transform: scale(0.96) translateY(12px);
+}
+
+.modal-enter-active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-exit {
+  opacity: 0;
+  transform: scale(0.96) translateY(12px);
+  transition: all 0.2s cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+/* Transições suaves de cards */
+.gift-card {
+  will-change: transform, opacity;
+  transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}

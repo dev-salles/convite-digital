@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Painel de Imagens Locais | Maria Eduarda & Davi</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Alex Brush, Playfair Display & Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBF9F5',
+            'linen-dark': '#F3EFEA',
+            charcoal: '#2C3531',
+            muted: '#636D67',
+            gold: {
+              DEFAULT: '#C5A059',
+              light: '#E6D7B9',
+              hover: '#B58E45',
+              dark: '#93702B'
+            }
+          },
+          fontFamily: {
+            cursive: ['"Alex Brush"', 'cursive'],
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Montserrat"', 'sans-serif'],
+          },
+          boxShadow: {
+            'subtle': '0 8px 30px rgba(44, 53, 49, 0.05)',
+            'card-hover': '0 15px 35px rgba(197, 160, 89, 0.14)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="src/styles/custom.css">
+</head>
+<body class="bg-linen min-h-screen text-charcoal flex flex-col selection:bg-gold/20 selection:text-charcoal relative">
+
+  <!-- BARRA DE NAVEGAÇÃO SUPERIOR -->
+  <nav class="bg-white/80 backdrop-blur-md border-b border-gold/20 sticky top-0 z-40 px-4 py-3">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-gold bg-linen text-gold-dark font-serif font-bold text-sm">
+          M&D
+        </a>
+        <div>
+          <h1 class="text-sm font-serif font-bold text-charcoal">Painel de Imagens Locais</h1>
+          <p class="text-[10px] text-muted">Personalização de Fotos do Convite & Presentes</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="lista-de-presentes.html" class="px-3.5 py-1.5 rounded-full border border-gold text-gold-dark hover:bg-gold hover:text-white text-xs font-semibold tracking-wider uppercase transition-colors">
+          🎁 Ver Lista de Presentes
+        </a>
+        <a href="index.html" class="px-3.5 py-1.5 rounded-full bg-charcoal text-white hover:bg-gold text-xs font-semibold tracking-wider uppercase transition-colors">
+          💌 Ver Convite
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="max-w-6xl mx-auto w-full px-4 py-8 flex-grow">
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <header class="text-center max-w-2xl mx-auto mb-10">
+      <span class="inline-block text-[11px] uppercase tracking-[0.25em] font-semibold text-gold-dark bg-gold/10 px-3 py-1 rounded-full mb-3">
+        Gerenciador de Mídia
+      </span>
+      <h2 class="font-serif text-3xl sm:text-4xl text-charcoal font-bold mb-3">
+        Como Adicionar Suas Imagens Locais
+      </h2>
+      <p class="text-muted text-sm leading-relaxed">
+        Você pode colocar suas próprias fotos para cada presente da lista e para o casal.
+        Utilize este painel para testar fotos do seu computador, salvá-las instantaneamente no navegador ou baixá-las com o nome correto para colocar na pasta do projeto!
+      </p>
+    </header>
+
+    <!-- GUIA DE PASTAS DO PROJETO -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+      <!-- Card Pasta 1: Presentes -->
+      <div class="bg-white rounded-2xl p-6 border border-gold/30 shadow-subtle flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-gold/15 flex items-center justify-center text-gold-dark">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-serif text-base font-bold text-charcoal">Pasta dos Presentes</h3>
+              <p class="text-xs text-muted font-mono">convite_casamento/images/gifts/</p>
+            </div>
+          </div>
+          <p class="text-xs text-muted leading-relaxed mb-4">
+            Coloque aqui as fotos dos presentes da sua lista (ex: <code class="bg-linen-dark px-1.5 py-0.5 rounded text-charcoal font-mono">jantar-velas.jpg</code>, <code class="bg-linen-dark px-1.5 py-0.5 rounded text-charcoal font-mono">cafe-cama.jpg</code>).
+            Se o arquivo não existir na pasta, a página usa automaticamente a foto remota elegante de reserva.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-linen-dark flex items-center justify-between text-xs text-muted">
+          <span>Formatos: JPG, PNG, WEBP</span>
+          <span class="font-semibold text-gold-dark">Recomendado: 600x400 px</span>
+        </div>
+      </div>
+
+      <!-- Card Pasta 2: Casal -->
+      <div class="bg-white rounded-2xl p-6 border border-gold/30 shadow-subtle flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-gold/15 flex items-center justify-center text-gold-dark">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-serif text-base font-bold text-charcoal">Pasta do Casal</h3>
+              <p class="text-xs text-muted font-mono">convite_casamento/images/casal/</p>
+            </div>
+          </div>
+          <p class="text-xs text-muted leading-relaxed mb-4">
+            Coloque aqui a foto principal do ensaio pré-wedding dos noivos e monogramas (ex: <code class="bg-linen-dark px-1.5 py-0.5 rounded text-charcoal font-mono">foto-casal-principal.jpg</code>).
+          </p>
+        </div>
+        <div class="pt-3 border-t border-linen-dark flex items-center justify-between text-xs text-muted">
+          <span>Formatos: JPG, PNG, WEBP</span>
+          <span class="font-semibold text-gold-dark">Alta Resolução</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BARRA DE AÇÕES RÁPIDAS -->
+    <div class="bg-white rounded-2xl p-4 border border-gold/25 shadow-subtle mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <h4 class="font-serif font-bold text-sm text-charcoal">Gerenciamento no Navegador</h4>
+        <p class="text-xs text-muted">Você pode testar qualquer foto do seu computador agora mesmo sem mexer em código.</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button 
+          id="btn-clear-all"
+          type="button"
+          class="px-4 py-2 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer">
+          Restaurar Todas as Fotos Padrão
+        </button>
+      </div>
+    </div>
+
+    <!-- GRADE DE PRESENTES PARA CONFIGURAÇÃO DE FOTOS LOCAIS -->
+    <section>
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h3 class="font-serif text-2xl font-bold text-charcoal">Fotos dos Presentes da Lista</h3>
+          <p class="text-xs text-muted">Selecione uma imagem do seu computador para cada presente ou baixe o arquivo com o nome correto.</p>
+        </div>
+        <span id="custom-count-badge" class="text-xs bg-gold/10 text-gold-dark font-semibold px-3 py-1 rounded-full">
+          0 imagens locais salvas no navegador
+        </span>
+      </div>
+
+      <div id="image-manager-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populado dinamicamente via script -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="mt-auto border-t border-gold/20 py-6 px-4 text-center bg-white/50 text-xs text-muted">
+    Maria Eduarda & Davi • 16 de Outubro de 2027 • Painel de Gestão de Arquivos Locais
+  </footer>
+
+  <!-- TOAST DE NOTIFICAÇÃO -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-charcoal text-white text-xs px-4 py-3 rounded-xl shadow-lg border border-gold/40 flex items-center gap-2">
+      <span id="toast-message">Operação realizada com sucesso!</span>
+    </div>
+  </div>
+
+  <!-- SCRIPTS DO SISTEMA -->
+  <script src="src/data/gifts.data.js"></script>
+
+  <script>
+    // Gerenciador Interativo da Página
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('image-manager-grid');
+      const countBadge = document.getElementById('custom-count-badge');
+      const clearAllBtn = document.getElementById('btn-clear-all');
+
+      function showToast(msg) {
+        const toast = document.getElementById('toast');
+        const text = document.getElementById('toast-message');
+        text.textContent = msg;
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        setTimeout(() => {
+          toast.classList.add('translate-y-20', 'opacity-0');
+        }, 2800);
+      }
+
+      function updateCountBadge() {
+        let count = 0;
+        GIFTS_DATA.forEach(g => {
+          if (localStorage.getItem('wedding_gift_img_' + g.id)) {
+            count++;
+          }
+        });
+        countBadge.textContent = `${count} de ${GIFTS_DATA.length} imagens salvas no navegador`;
+      }
+
+      function renderGiftCards() {
+        grid.innerHTML = '';
+
+        GIFTS_DATA.forEach(gift => {
+          const card = document.createElement('div');
+          card.className = 'bg-white rounded-2xl border border-gold/25 p-5 shadow-subtle flex flex-col justify-between';
+          
+          const savedImage = localStorage.getItem('wedding_gift_img_' + gift.id);
+          const currentImgSrc = savedImage || gift.localImageUrl || gift.remoteImageUrl;
+          const fileName = `${gift.id}.jpg`;
+          const relativePath = `images/gifts/${fileName}`;
+
+          card.innerHTML = `
+            <div>
+              <!-- Cabeçalho do Card -->
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-[10px] uppercase font-semibold text-gold-dark bg-gold/10 px-2.5 py-0.5 rounded-full">
+                  ${gift.categoryLabel}
+                </span>
+                <span class="status-badge text-[10px] font-medium px-2 py-0.5 rounded-full ${savedImage ? 'bg-green-100 text-green-800' : 'bg-linen-dark text-muted'}">
+                  ${savedImage ? '✓ Salvo no Navegador' : 'Arquivo Local: ' + fileName}
+                </span>
+              </div>
+
+              <!-- Pré-visualização da Imagem -->
+              <div class="relative h-44 rounded-xl overflow-hidden bg-linen-dark mb-4 border border-gold/20">
+                <img 
+                  id="preview-img-${gift.id}"
+                  src="${currentImgSrc}" 
+                  alt="${gift.title}"
+                  onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = '${gift.remoteImageUrl}'; }"
+                  class="w-full h-full object-cover">
+              </div>
+
+              <!-- Detalhes do Presente -->
+              <h4 class="font-serif font-bold text-base text-charcoal mb-1">${gift.title}</h4>
+              <p class="text-xs text-muted mb-3 font-mono bg-linen-dark p-2 rounded-lg break-all">
+                Salvar em: <strong class="text-charcoal">${relativePath}</strong>
+              </p>
+            </div>
+
+            <!-- Controles de Imagem -->
+            <div class="pt-3 border-t border-linen-dark flex flex-col gap-2">
+              <label class="w-full py-2 px-3 rounded-xl border border-gold/40 hover:border-gold bg-linen/50 hover:bg-gold/5 text-charcoal text-xs font-semibold text-center cursor-pointer transition-colors flex items-center justify-center gap-1.5">
+                <svg class="w-4 h-4 text-gold-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                </svg>
+                <span>Escolher Imagem do PC</span>
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  class="hidden" 
+                  data-gift-id="${gift.id}">
+              </label>
+
+              <div class="grid grid-cols-2 gap-2">
+                <button 
+                  type="button" 
+                  data-download-id="${gift.id}"
+                  class="btn-download py-1.5 px-2 rounded-lg bg-linen-dark hover:bg-gold/20 text-charcoal text-[11px] font-semibold transition-colors flex items-center justify-center gap-1"
+                  title="Baixa a foto já com o nome exato para colocar na pasta images/gifts/">
+                  ⬇️ Baixar ${fileName}
+                </button>
+
+                <button 
+                  type="button" 
+                  data-reset-id="${gift.id}"
+                  class="btn-reset py-1.5 px-2 rounded-lg border border-linen-dark hover:bg-red-50 text-muted hover:text-red-600 text-[11px] font-medium transition-colors"
+                  title="Restaura a imagem remota original">
+                  Restaurar
+                </button>
+              </div>
+            </div>
+          `;
+
+          // Evento de seleção de arquivo
+          const fileInput = card.querySelector('input[type="file"]');
+          fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const base64Data = event.target.result;
+              // Salvar no localStorage
+              localStorage.setItem('wedding_gift_img_' + gift.id, base64Data);
+              
+              // Atualizar imagem no preview
+              const imgElem = document.getElementById('preview-img-' + gift.id);
+              imgElem.src = base64Data;
+
+              // Atualizar status
+              const status = card.querySelector('.status-badge');
+              status.className = 'status-badge text-[10px] font-medium px-2 py-0.5 rounded-full bg-green-100 text-green-800';
+              status.textContent = '✓ Salvo no Navegador';
+
+              updateCountBadge();
+              showToast(`Foto de "${gift.title}" atualizada com sucesso!`);
+            };
+            reader.readAsDataURL(file);
+          });
+
+          // Evento de download com o nome correto
+          const downloadBtn = card.querySelector(`[data-download-id="${gift.id}"]`);
+          downloadBtn.addEventListener('click', () => {
+            const previewImg = document.getElementById('preview-img-' + gift.id);
+            const a = document.createElement('a');
+            a.href = previewImg.src;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast(`Baixando arquivo ${fileName}... Basta salvá-lo na pasta images/gifts/`);
+          });
+
+          // Evento de reset individual
+          const resetBtn = card.querySelector(`[data-reset-id="${gift.id}"]`);
+          resetBtn.addEventListener('click', () => {
+            localStorage.removeItem('wedding_gift_img_' + gift.id);
+            const imgElem = document.getElementById('preview-img-' + gift.id);
+            imgElem.src = gift.remoteImageUrl;
+            
+            const status = card.querySelector('.status-badge');
+            status.className = 'status-badge text-[10px] font-medium px-2 py-0.5 rounded-full bg-linen-dark text-muted';
+            status.textContent = 'Arquivo Local: ' + fileName;
+
+            updateCountBadge();
+            showToast(`Restaurado para a foto padrão de "${gift.title}".`);
+          });
+
+          grid.appendChild(card);
+        });
+
+        updateCountBadge();
+      }
+
+      // Limpar todos
+      clearAllBtn.addEventListener('click', () => {
+        if (confirm("Deseja realmente restaurar todas as fotos padrão?")) {
+          GIFTS_DATA.forEach(g => {
+            localStorage.removeItem('wedding_gift_img_' + g.id);
+          });
+          renderGiftCards();
+          showToast("Todas as fotos foram restauradas para o padrão.");
+        }
+      });
+
+      renderGiftCards();
+    });
+  </script>
+
+</body>
+</html>

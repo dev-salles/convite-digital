@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Painel dos Noivos | Gestão de Presentes - Maria Eduarda & Davi</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Alex Brush, Playfair Display & Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBF9F5',
+            'linen-dark': '#F3EFEA',
+            charcoal: '#2C3531',
+            muted: '#636D67',
+            gold: {
+              DEFAULT: '#C5A059',
+              light: '#E6D7B9',
+              hover: '#B58E45',
+              dark: '#93702B'
+            }
+          },
+          fontFamily: {
+            cursive: ['"Alex Brush"', 'cursive'],
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Montserrat"', 'sans-serif'],
+          },
+          boxShadow: {
+            'subtle': '0 8px 30px rgba(44, 53, 49, 0.05)',
+            'card-hover': '0 15px 35px rgba(197, 160, 89, 0.14)',
+            'modal': '0 25px 60px rgba(44, 53, 49, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="src/styles/custom.css">
+</head>
+<body class="bg-linen min-h-screen text-charcoal flex flex-col selection:bg-gold/20 selection:text-charcoal relative">
+
+  <!-- =========================================================
+       TELA 1: LOGIN DOS NOIVOS (PROTEÇÃO COM SENHA)
+       ========================================================= -->
+  <div id="login-screen" class="min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 border border-gold/30 shadow-modal text-center relative overflow-hidden">
+      <!-- Decoração sutil de fundo -->
+      <div class="pointer-events-none absolute -top-12 -right-12 w-32 h-32 bg-gold/10 rounded-full blur-2xl"></div>
+      
+      <!-- Monograma -->
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full border border-gold bg-linen text-gold-dark font-serif font-bold text-xl mb-4 shadow-sm">
+        M&D
+      </div>
+
+      <h1 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal mb-1">
+        Área dos Noivos
+      </h1>
+      <p class="text-xs text-muted leading-relaxed mb-6">
+        Acesso restrito para Maria Eduarda & Davi gerenciarem a lista de presentes e cotas do casamento.
+      </p>
+
+      <!-- Formulário de Autenticação -->
+      <form id="form-login" class="flex flex-col gap-4 text-left">
+        <div>
+          <label for="admin-pass" class="text-[11px] uppercase tracking-wider font-semibold text-charcoal block mb-1.5">
+            Senha de Acesso:
+          </label>
+          <div class="relative flex items-center">
+            <input 
+              type="password" 
+              id="admin-pass" 
+              placeholder="Digite a senha dos noivos..." 
+              required
+              class="w-full py-3 px-4 pr-12 rounded-xl bg-linen-dark border border-gold/40 text-sm text-charcoal outline-none focus:border-gold transition-colors">
+            <button 
+              type="button" 
+              id="btn-toggle-pass" 
+              class="absolute right-3 text-muted hover:text-charcoal text-xs p-1 cursor-pointer"
+              title="Mostrar/Ocultar Senha">
+              👁️
+            </button>
+          </div>
+          <span id="login-error" class="text-xs text-red-600 mt-1.5 hidden block">
+            Senha incorreta. Verifique e tente novamente.
+          </span>
+        </div>
+
+        <button 
+          type="submit"
+          class="w-full py-3 rounded-xl bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-md cursor-pointer mt-2">
+          Entrar no Painel
+        </button>
+      </form>
+
+      <!-- Rodapé do Card de Login -->
+      <div class="mt-8 pt-4 border-t border-linen-dark flex items-center justify-between text-xs text-muted">
+        <a href="lista-de-presentes.html" class="hover:text-gold-dark transition-colors">
+          ← Voltar para a Lista
+        </a>
+        <span class="text-[10px] text-muted/80">Hospedado na Vercel</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       TELA 2: PAINEL ADMINISTRATIVO (APÓS LOGIN)
+       ========================================================= -->
+  <div id="admin-dashboard" class="hidden min-h-screen flex flex-col">
+    
+    <!-- BARRA SUPERIOR DO PAINEL -->
+    <header class="bg-white/85 backdrop-blur-md border-b border-gold/25 sticky top-0 z-40 px-4 py-3">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full border border-gold bg-linen text-gold-dark font-serif font-bold text-xs flex items-center justify-center">
+            M&D
+          </div>
+          <div>
+            <h2 class="text-sm font-serif font-bold text-charcoal">Gestão da Lista de Presentes</h2>
+            <p class="text-[10px] text-muted">Maria Eduarda & Davi • 16.10.2027</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a href="lista-de-presentes.html" target="_blank" class="px-3 py-1.5 rounded-lg border border-gold/40 text-gold-dark hover:bg-gold/10 text-xs font-semibold tracking-wider transition-colors">
+            Ver Site no Ar ↗
+          </a>
+          <button 
+            id="btn-logout"
+            type="button" 
+            class="px-3 py-1.5 rounded-lg bg-charcoal text-white hover:bg-red-700 text-xs font-semibold tracking-wider transition-colors cursor-pointer">
+            Sair
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="max-w-6xl mx-auto w-full px-4 py-8 flex-grow">
+      
+      <!-- RESUMO & MÉTRICAS RÁPIDAS -->
+      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div class="bg-white rounded-2xl p-5 border border-gold/25 shadow-subtle">
+          <span class="text-[10px] uppercase font-semibold text-muted tracking-wider block mb-1">Total de Presentes</span>
+          <span id="metric-total-gifts" class="font-serif text-3xl font-bold text-charcoal">0</span>
+          <span class="text-xs text-gold-dark mt-1 block">Itens cadastrados no catálogo</span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-gold/25 shadow-subtle">
+          <span class="text-[10px] uppercase font-semibold text-muted tracking-wider block mb-1">Valor Total do Catálogo</span>
+          <span id="metric-total-value" class="font-serif text-3xl font-bold text-charcoal">R$ 0,00</span>
+          <span class="text-xs text-green-700 mt-1 block">Soma de todas as cotas sugeridas</span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-gold/25 shadow-subtle">
+          <span class="text-[10px] uppercase font-semibold text-muted tracking-wider block mb-1">Produtos Físicos vs Virtuais</span>
+          <div class="flex items-center gap-3 mt-1">
+            <span id="metric-physical-count" class="font-serif text-2xl font-bold text-charcoal">0 físicas</span>
+            <span class="text-muted">•</span>
+            <span id="metric-virtual-count" class="font-serif text-2xl font-bold text-gold-dark">0 cotas</span>
+          </div>
+          <span class="text-xs text-muted mt-1 block">Distribuição do catálogo</span>
+        </div>
+      </section>
+
+      <!-- BARRA DE EXPORTAÇÃO & SINCRONIZAÇÃO PARA A VERCEL -->
+      <section class="bg-gradient-to-r from-white via-linen to-white rounded-2xl p-5 border border-gold/30 shadow-subtle mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-gold-dark bg-gold/15 px-2.5 py-0.5 rounded-full mb-1">
+            <span>🚀 Sincronização Vercel / GitHub</span>
+          </span>
+          <h3 class="font-serif text-base font-bold text-charcoal">Publicar Alterações para Todos os Convidados</h3>
+          <p class="text-xs text-muted max-w-xl">
+            As alterações feitas aqui já ficam salvas imediatamente no seu navegador. Para atualizar o site oficial na Vercel para todos os convidados, baixe o arquivo atualizado e dê um <code class="font-mono bg-linen-dark px-1 rounded">git push</code>.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          <button 
+            id="btn-download-json"
+            type="button"
+            class="px-3.5 py-2 rounded-xl bg-charcoal hover:bg-gold text-white text-xs font-semibold tracking-wider uppercase transition-colors shadow-sm cursor-pointer flex items-center gap-1.5">
+            <span>📥 Baixar gifts.json</span>
+          </button>
+
+          <button 
+            id="btn-copy-json"
+            type="button"
+            class="px-3.5 py-2 rounded-xl border border-gold text-gold-dark hover:bg-gold hover:text-white text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer">
+            <span id="copy-json-text">📋 Copiar JSON</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- BARRA DE AÇÕES: BUSCA, FILTRO E NOVO ITEM -->
+      <section class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <input 
+            type="text" 
+            id="admin-search-input"
+            placeholder="Buscar presente por nome..." 
+            class="py-2.5 px-4 rounded-xl bg-white border border-gold/30 text-xs text-charcoal outline-none focus:border-gold w-full sm:w-64">
+          
+          <select 
+            id="admin-category-filter"
+            class="py-2.5 px-3 rounded-xl bg-white border border-gold/30 text-xs text-charcoal outline-none focus:border-gold cursor-pointer">
+            <option value="todos">Todas Categorias</option>
+            <option value="lua-de-mel">Lua de Mel</option>
+            <option value="casa-nova">Casa Nova</option>
+            <option value="experiencias">Experiências & Mimos</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <button 
+            id="btn-open-add-modal"
+            type="button"
+            class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer">
+            <span>+ Adicionar Novo Presente</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- LISTAGEM DOS PRESENTES -->
+      <section id="admin-gifts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Renderizado dinamicamente via JS -->
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- =========================================================
+       MODAL DE CADASTRO / EDIÇÃO DE PRESENTE
+       ========================================================= -->
+  <div id="gift-form-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-charcoal/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+    <div id="gift-form-box" class="bg-white w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-modal border border-gold/30 relative flex flex-col transform transition-transform duration-300 modal-enter max-h-[92vh] overflow-y-auto no-scrollbar">
+      
+      <!-- Botão Fechar -->
+      <button 
+        type="button"
+        id="btn-close-gift-modal"
+        aria-label="Fechar"
+        class="absolute top-4 right-4 text-muted hover:text-charcoal p-1.5 rounded-full hover:bg-linen-dark transition-colors cursor-pointer">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Título do Formulário -->
+      <div class="mb-5">
+        <span class="text-[10px] uppercase tracking-wider font-semibold text-gold-dark bg-gold/10 px-2.5 py-0.5 rounded-full inline-block mb-1">
+          Formulário do Catálogo
+        </span>
+        <h3 id="form-modal-title" class="font-serif text-2xl font-bold text-charcoal">
+          Adicionar Novo Presente
+        </h3>
+        <p class="text-xs text-muted">Preencha os dados e especificações que serão exibidos aos convidados.</p>
+      </div>
+
+      <!-- Formulário Completo -->
+      <form id="form-gift" class="flex flex-col gap-4 text-xs">
+        <input type="hidden" id="gift-id" value="">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Título -->
+          <div>
+            <label class="font-semibold text-charcoal block mb-1">Título do Presente *</label>
+            <input 
+              type="text" 
+              id="gift-title" 
+              required
+              placeholder="Ex: Jogo de Panelas Solar" 
+              class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
+          </div>
+
+          <!-- Categoria -->
+          <div>
+            <label class="font-semibold text-charcoal block mb-1">Categoria *</label>
+            <select 
+              id="gift-category" 
+              required
+              class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
+              <option value="casa-nova">Casa Nova</option>
+              <option value="lua-de-mel">Lua de Mel</option>
+              <option value="experiencias">Experiências & Mimos</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Valor da Cota -->
+          <div>
+            <label class="font-semibold text-charcoal block mb-1">Valor da Cota (R$) *</label>
+            <input 
+              type="number" 
+              id="gift-price" 
+              step="5"
+              min="10"
+              required
+              placeholder="Ex: 250" 
+              class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
+          </div>
+
+          <!-- Tipo de Presente -->
+          <div>
+            <label class="font-semibold text-charcoal block mb-1">Tipo de Presente *</label>
+            <select 
+              id="gift-is-physical" 
+              class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
+              <option value="true">Produto Físico (com opção de compra na loja)</option>
+              <option value="false">Cota Virtual de Viagem / Experiência</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Modelo Técnico -->
+        <div>
+          <label class="font-semibold text-charcoal block mb-1">Modelo Técnico / Comercial Específico</label>
+          <input 
+            type="text" 
+            id="gift-model" 
+            placeholder="Ex: Fritadeira Elétrica Philips Walita Série 1000 Digital 6.2L" 
+            class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
+        </div>
+
+        <!-- Foto do Presente (URL ou Arquivo Local) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+          <div>
+            <label class="font-semibold text-charcoal block mb-1">URL da Imagem</label>
+            <input 
+              type="url" 
+              id="gift-image-url" 
+              placeholder="https://... ou images/gifts/item.jpg" 
+              class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-charcoal block mb-1">Ou Escolher Imagem do PC</label>
+            <input 
+              type="file" 
+              id="gift-image-file" 
+              accept="image/*"
+              class="w-full text-xs text-muted file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gold file:text-white hover:file:bg-gold-hover cursor-pointer">
+          </div>
+        </div>
+
+        <!-- Descrição Breve -->
+        <div>
+          <label class="font-semibold text-charcoal block mb-1">Descrição Breve do Card</label>
+          <textarea 
+            id="gift-desc" 
+            rows="2"
+            placeholder="Breve frase que aparece no card do presente..." 
+            class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none"></textarea>
+        </div>
+
+        <!-- Mensagem Afetiva dos Noivos -->
+        <div>
+          <label class="font-semibold text-charcoal block mb-1">Nota Afetiva dos Noivos (Por que queremos este item?)</label>
+          <textarea 
+            id="gift-affective" 
+            rows="2"
+            placeholder="Ex: Escolhemos este modelo porque adoramos cozinhar juntos e receber nossos amigos..." 
+            class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none"></textarea>
+        </div>
+
+        <!-- Loja Recomendada & Link -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="font-semibold text-charcoal block mb-1">Nome da Loja Recomendada</label>
+            <input 
+              type="text" 
+              id="gift-store-name" 
+              placeholder="Ex: Amazon Brasil / Magalu" 
+              class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-charcoal block mb-1">Link de Compra na Loja (URL)</label>
+            <input 
+              type="url" 
+              id="gift-store-url" 
+              placeholder="https://www.amazon.com.br/dp/..." 
+              class="w-full py-2 px-3 rounded-xl bg-linen border border-gold/30 text-charcoal focus:border-gold outline-none">
+          </div>
+        </div>
+
+        <!-- Botões de Ação do Form -->
+        <div class="pt-4 border-t border-linen-dark flex items-center justify-end gap-3 mt-2">
+          <button 
+            type="button" 
+            id="btn-cancel-gift"
+            class="px-4 py-2 rounded-xl border border-linen-dark text-muted hover:text-charcoal text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer">
+            Cancelar
+          </button>
+          <button 
+            type="submit"
+            class="px-6 py-2 rounded-xl bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm cursor-pointer">
+            Salvar Presente
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICAÇÃO -->
+  <div id="admin-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-charcoal text-white text-xs px-4 py-3 rounded-xl shadow-lg border border-gold/40 flex items-center gap-2">
+      <span id="admin-toast-text">Operação concluída com sucesso!</span>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="src/config/admin.config.js"></script>
+  <script src="src/data/gifts.data.js"></script>
+
+  <script>
+    // Gerenciador do Painel Administrativo
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginScreen = document.getElementById('login-screen');
+      const adminDashboard = document.getElementById('admin-dashboard');
+      const formLogin = document.getElementById('form-login');
+      const adminPassInput = document.getElementById('admin-pass');
+      const loginError = document.getElementById('login-error');
+      const btnTogglePass = document.getElementById('btn-toggle-pass');
+      const btnLogout = document.getElementById('btn-logout');
+
+      // Grid e Filtros
+      const giftsGrid = document.getElementById('admin-gifts-grid');
+      const searchInput = document.getElementById('admin-search-input');
+      const categoryFilter = document.getElementById('admin-category-filter');
+      const btnOpenAddModal = document.getElementById('btn-open-add-modal');
+
+      // Métricas
+      const metricTotalGifts = document.getElementById('metric-total-gifts');
+      const metricTotalValue = document.getElementById('metric-total-value');
+      const metricPhysical = document.getElementById('metric-physical-count');
+      const metricVirtual = document.getElementById('metric-virtual-count');
+
+      // Modal de Presente
+      const giftModal = document.getElementById('gift-form-modal');
+      const giftBox = document.getElementById('gift-form-box');
+      const btnCloseModal = document.getElementById('btn-close-gift-modal');
+      const btnCancelModal = document.getElementById('btn-cancel-gift');
+      const formGift = document.getElementById('form-gift');
+      const modalTitle = document.getElementById('form-modal-title');
+
+      // Toast
+      const toast = document.getElementById('admin-toast');
+      const toastText = document.getElementById('admin-toast-text');
+
+      function notify(msg) {
+        toastText.textContent = msg;
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        setTimeout(() => {
+          toast.classList.add('translate-y-20', 'opacity-0');
+        }, 2800);
+      }
+
+      // 1. Controle de Autenticação
+      function checkAuth() {
+        if (ADMIN_CONFIG.isAuthenticated()) {
+          loginScreen.classList.add('hidden');
+          adminDashboard.classList.remove('hidden');
+          renderDashboard();
+        } else {
+          loginScreen.classList.remove('hidden');
+          adminDashboard.classList.add('hidden');
+        }
+      }
+
+      formLogin.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const pass = adminPassInput.value;
+        if (ADMIN_CONFIG.verifyPassword(pass)) {
+          ADMIN_CONFIG.login();
+          loginError.classList.add('hidden');
+          checkAuth();
+          notify("Login realizado com sucesso! Bem-vindos ao painel.");
+        } else {
+          loginError.classList.remove('hidden');
+        }
+      });
+
+      btnTogglePass.addEventListener('click', () => {
+        if (adminPassInput.type === 'password') {
+          adminPassInput.type = 'text';
+          btnTogglePass.textContent = '🔒';
+        } else {
+          adminPassInput.type = 'password';
+          btnTogglePass.textContent = '👁️';
+        }
+      });
+
+      btnLogout.addEventListener('click', () => {
+        ADMIN_CONFIG.logout();
+        checkAuth();
+        notify("Sessão encerrada com sucesso.");
+      });
+
+      // 2. Renderização do Dashboard
+      function renderDashboard() {
+        const allGifts = GiftsRepository.getAll();
+
+        // Atualizar Métricas
+        metricTotalGifts.textContent = allGifts.length;
+        const totalVal = allGifts.reduce((acc, item) => acc + (Number(item.price) || 0), 0);
+        metricTotalValue.textContent = Number(totalVal).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        
+        const physical = allGifts.filter(i => i.isPhysical).length;
+        const virtual = allGifts.length - physical;
+        metricPhysical.textContent = `${physical} físicas`;
+        metricVirtual.textContent = `${virtual} cotas`;
+
+        // Filtrar Presentes
+        const query = searchInput.value.toLowerCase().trim();
+        const cat = categoryFilter.value;
+
+        const filtered = allGifts.filter(gift => {
+          const matchQuery = !query || gift.title.toLowerCase().includes(query) || (gift.productModel && gift.productModel.toLowerCase().includes(query));
+          const matchCat = cat === 'todos' || gift.category === cat;
+          return matchQuery && matchCat;
+        });
+
+        // Renderizar Cards Administrativos
+        giftsGrid.innerHTML = '';
+        if (filtered.length === 0) {
+          giftsGrid.innerHTML = `
+            <div class="col-span-full py-12 text-center text-muted text-xs bg-white rounded-2xl border border-gold/20">
+              Nenhum presente encontrado com os filtros atuais.
+            </div>
+          `;
+          return;
+        }
+
+        filtered.forEach(gift => {
+          const card = document.createElement('div');
+          card.className = 'bg-white rounded-2xl border border-gold/25 p-5 shadow-subtle flex flex-col justify-between';
+          
+          const valorFormatado = Number(gift.price || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+          const imageSrc = gift.imageUrl || gift.remoteImageUrl;
+
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-[10px] uppercase font-semibold text-gold-dark bg-gold/10 px-2 py-0.5 rounded-full">
+                  ${gift.categoryLabel}
+                </span>
+                <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full ${gift.isPhysical ? 'bg-amber-100 text-amber-900' : 'bg-blue-100 text-blue-900'}">
+                  ${gift.isPhysical ? '📦 Físico' : '✈️ Cota'}
+                </span>
+              </div>
+
+              <div class="relative h-40 rounded-xl overflow-hidden bg-linen-dark mb-3 border border-gold/20">
+                <img 
+                  src="${imageSrc}" 
+                  alt="${gift.title}"
+                  onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = '${gift.remoteImageUrl}'; }"
+                  class="w-full h-full object-cover">
+              </div>
+
+              <h4 class="font-serif font-bold text-base text-charcoal mb-0.5">${gift.title}</h4>
+              <p class="text-xs text-gold-dark font-mono font-medium mb-1">${gift.productModel || ''}</p>
+              <p class="text-xs text-muted mb-3 line-clamp-2">${gift.description || ''}</p>
+
+              <div class="pt-2 border-t border-linen-dark flex items-center justify-between mb-4">
+                <span class="text-[10px] uppercase text-muted font-medium">Valor Sugerido</span>
+                <span class="font-serif text-lg font-bold text-charcoal">${valorFormatado}</span>
+              </div>
+            </div>
+
+            <!-- Ações -->
+            <div class="grid grid-cols-2 gap-2 pt-2 border-t border-linen-dark">
+              <button 
+                type="button" 
+                data-action="edit" 
+                data-id="${gift.id}"
+                class="py-2 px-3 rounded-xl bg-linen-dark hover:bg-gold/20 text-charcoal text-xs font-semibold transition-colors flex items-center justify-center gap-1 cursor-pointer">
+                ✏️ Editar
+              </button>
+              <button 
+                type="button" 
+                data-action="delete" 
+                data-id="${gift.id}"
+                class="py-2 px-3 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 text-xs font-semibold transition-colors flex items-center justify-center gap-1 cursor-pointer">
+                🗑️ Excluir
+              </button>
+            </div>
+          `;
+
+          // Eventos de Editar e Excluir
+          card.querySelector('[data-action="edit"]').addEventListener('click', () => openEditModal(gift));
+          card.querySelector('[data-action="delete"]').addEventListener('click', () => deleteGiftItem(gift.id, gift.title));
+
+          giftsGrid.appendChild(card);
+        });
+      }
+
+      searchInput.addEventListener('input', renderDashboard);
+      categoryFilter.addEventListener('change', renderDashboard);
+
+      // 3. Modal de Cadastro e Edição
+      function openAddModal() {
+        formGift.reset();
+        document.getElementById('gift-id').value = '';
+        modalTitle.textContent = "Adicionar Novo Presente";
+        openModal();
+      }
+
+      function openEditModal(gift) {
+        document.getElementById('gift-id').value = gift.id;
+        document.getElementById('gift-title').value = gift.title || '';
+        document.getElementById('gift-category').value = gift.category || 'casa-nova';
+        document.getElementById('gift-price').value = gift.price || 100;
+        document.getElementById('gift-is-physical').value = gift.isPhysical ? 'true' : 'false';
+        document.getElementById('gift-model').value = gift.productModel || '';
+        document.getElementById('gift-image-url').value = gift.imageUrl || gift.remoteImageUrl || '';
+        document.getElementById('gift-desc').value = gift.description || '';
+        document.getElementById('gift-affective').value = gift.affectiveNote || '';
+        document.getElementById('gift-store-name').value = gift.storeName || '';
+        document.getElementById('gift-store-url').value = gift.storeUrl || '';
+
+        modalTitle.textContent = "Editar Presente: " + gift.title;
+        openModal();
+      }
+
+      function openModal() {
+        giftModal.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          giftModal.classList.remove('opacity-0');
+          giftBox.classList.remove('modal-enter');
+          giftBox.classList.add('modal-enter-active');
+        });
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        giftBox.classList.remove('modal-enter-active');
+        giftBox.classList.add('modal-exit');
+        giftModal.classList.add('opacity-0');
+        setTimeout(() => {
+          giftModal.classList.add('hidden');
+          giftBox.classList.remove('modal-exit');
+          giftBox.classList.add('modal-enter');
+          document.body.style.overflow = '';
+        }, 250);
+      }
+
+      btnOpenAddModal.addEventListener('click', openAddModal);
+      btnCloseModal.addEventListener('click', closeModal);
+      btnCancelModal.addEventListener('click', closeModal);
+      giftModal.addEventListener('click', (e) => {
+        if (e.target === giftModal) closeModal();
+      });
+
+      // Salvar Presente (Novo ou Editado)
+      formGift.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById('gift-id').value;
+        const title = document.getElementById('gift-title').value.trim();
+        const category = document.getElementById('gift-category').value;
+        const price = Number(document.getElementById('gift-price').value);
+        const isPhysical = document.getElementById('gift-is-physical').value === 'true';
+        const productModel = document.getElementById('gift-model').value.trim();
+        const description = document.getElementById('gift-desc').value.trim();
+        const affectiveNote = document.getElementById('gift-affective').value.trim();
+        const storeName = document.getElementById('gift-store-name').value.trim();
+        const storeUrl = document.getElementById('gift-store-url').value.trim() || null;
+        let imageUrl = document.getElementById('gift-image-url').value.trim();
+
+        const fileInput = document.getElementById('gift-image-file');
+        
+        const saveOperation = (finalImageUrl) => {
+          const giftData = {
+            title,
+            category,
+            price,
+            isPhysical,
+            productModel: productModel || title,
+            description,
+            affectiveNote,
+            storeName,
+            storeUrl,
+            imageUrl: finalImageUrl || "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
+            remoteImageUrl: finalImageUrl || "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80"
+          };
+
+          if (id) {
+            // Edição
+            GiftsRepository.update(id, giftData);
+            notify(`"${title}" atualizado com sucesso!`);
+          } else {
+            // Criação
+            GiftsRepository.add(giftData);
+            notify(`"${title}" adicionado à lista!`);
+          }
+
+          closeModal();
+          renderDashboard();
+        };
+
+        // Se escolheu arquivo local, converter para Base64 antes de salvar
+        if (fileInput.files && fileInput.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            saveOperation(event.target.result);
+          };
+          reader.readAsDataURL(fileInput.files[0]);
+        } else {
+          saveOperation(imageUrl);
+        }
+      });
+
+      // Excluir Item
+      function deleteGiftItem(id, title) {
+        if (confirm(`Deseja realmente excluir "${title}" da lista de presentes?`)) {
+          GiftsRepository.delete(id);
+          notify(`"${title}" foi removido.`);
+          renderDashboard();
+        }
+      }
+
+      // 4. Exportação para a Vercel
+      document.getElementById('btn-download-json').addEventListener('click', () => {
+        const jsonContent = GiftsRepository.exportJSON();
+        const blob = new Blob([jsonContent], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gifts.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        notify("Arquivo gifts.json baixado! Coloque-o em src/data/gifts.json e envie para a Vercel.");
+      });
+
+      document.getElementById('btn-copy-json').addEventListener('click', async () => {
+        const jsonContent = GiftsRepository.exportJSON();
+        try {
+          await navigator.clipboard.writeText(jsonContent);
+          const copyText = document.getElementById('copy-json-text');
+          copyText.textContent = "✓ Copiado!";
+          setTimeout(() => { copyText.textContent = "📋 Copiar JSON"; }, 2000);
+          notify("JSON completo copiado para a área de transferência!");
+        } catch (e) {
+          alert("Não foi possível copiar automaticamente.");
+        }
+      });
+
+      // Iniciar
+      checkAuth();
+    });
+  </script>
+
+</body>
+</html>

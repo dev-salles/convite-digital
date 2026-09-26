@@ -44,41 +44,8 @@
     }
   </script>
 
-  <style>
-    /* Estilos base refinados */
-    body {
-      background-color: #FBF9F5;
-      color: #2C3531;
-      font-family: 'Montserrat', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Ocultar barra de rolagem horizontal nos filtros do mobile */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    /* Efeito de transição de fade e slide para o modal */
-    .modal-enter {
-      opacity: 0;
-      transform: scale(0.96) translateY(12px);
-    }
-    .modal-enter-active {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .modal-exit {
-      opacity: 0;
-      transform: scale(0.96) translateY(12px);
-      transition: all 0.2s cubic-bezier(0.7, 0, 0.84, 0);
-    }
-  </style>
+  <!-- Estilos Customizados e Transições -->
+  <link rel="stylesheet" href="src/styles/custom.css">
 </head>
 <body class="bg-linen min-h-screen text-charcoal flex flex-col selection:bg-gold/20 selection:text-charcoal relative overflow-x-hidden">
 
@@ -131,8 +98,9 @@
         <p class="text-xs text-muted">Prefere enviar uma quantia de sua preferência?</p>
       </div>
       <button 
-        onclick="openPixModal('Contribuição Especial dos Noivos', '', 'personalizado')"
-        class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-charcoal text-white hover:bg-gold text-xs font-semibold uppercase tracking-wider transition-colors duration-300 shadow-md">
+        id="btn-custom-amount"
+        type="button"
+        class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-charcoal text-white hover:bg-gold text-xs font-semibold uppercase tracking-wider transition-colors duration-300 shadow-md cursor-pointer">
         Valor Avulso
       </button>
     </div>
@@ -140,331 +108,38 @@
 
   <!-- BARRA DE FILTROS (MOBILE HORIZONTAL SCROLL) -->
   <section class="max-w-4xl mx-auto w-full px-4 mb-8">
-    <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar py-2 px-1">
+    <div id="filter-bar-container" class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar py-2 px-1">
       <button 
-        onclick="filterGifts('todos', this)" 
-        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-gold text-white shadow-sm">
+        type="button"
+        data-filter="todos"
+        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-gold text-white shadow-sm cursor-pointer">
         Todos
       </button>
       <button 
-        onclick="filterGifts('lua-de-mel', this)" 
-        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-white border border-gold/25 text-muted hover:border-gold hover:text-charcoal">
+        type="button"
+        data-filter="lua-de-mel"
+        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-white border border-gold/25 text-muted hover:border-gold hover:text-charcoal cursor-pointer">
         Lua de Mel
       </button>
       <button 
-        onclick="filterGifts('casa-nova', this)" 
-        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-white border border-gold/25 text-muted hover:border-gold hover:text-charcoal">
+        type="button"
+        data-filter="casa-nova"
+        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-white border border-gold/25 text-muted hover:border-gold hover:text-charcoal cursor-pointer">
         Casa Nova
       </button>
       <button 
-        onclick="filterGifts('experiencias', this)" 
-        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-white border border-gold/25 text-muted hover:border-gold hover:text-charcoal">
+        type="button"
+        data-filter="experiencias"
+        class="filter-tab px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase whitespace-nowrap transition-all duration-300 bg-white border border-gold/25 text-muted hover:border-gold hover:text-charcoal cursor-pointer">
         Experiências & Mimos
       </button>
     </div>
   </section>
 
-  <!-- GRADE DE PRESENTES VIRTUAIS -->
+  <!-- GRADE DE PRESENTES VIRTUAIS (RENDERIZADA DINAMICAMENTE PELO CONTROLLER) -->
   <main class="max-w-4xl mx-auto w-full px-4 pb-20 flex-grow">
     <div id="gifts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      
-      <!-- Card 1 -->
-      <article data-category="lua-de-mel" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
-        <div class="relative h-44 overflow-hidden bg-linen-dark">
-          <img 
-            src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=600&q=80" 
-            alt="Jantar Romântico" 
-            loading="lazy"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
-            Lua de Mel
-          </span>
-        </div>
-        <div class="p-5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Jantar à Luz de Velas</h3>
-            <p class="text-xs text-muted font-light leading-relaxed mb-4">
-              Para o primeiro brinde e um jantar inesquecível olhando as estrelas da nossa lua de mel.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
-              <span class="font-serif text-lg font-bold text-charcoal">R$ 220,00</span>
-            </div>
-            <button 
-              onclick="openPixModal('Jantar à Luz de Velas na Lua de Mel', 220)"
-              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm flex items-center gap-1.5">
-              <span>Presentear</span>
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 2 -->
-      <article data-category="experiencias" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
-        <div class="relative h-44 overflow-hidden bg-linen-dark">
-          <img 
-            src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=600&q=80" 
-            alt="Café na Cama" 
-            loading="lazy"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
-            Experiências
-          </span>
-        </div>
-        <div class="p-5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Café na Cama dos Recém-Casados</h3>
-            <p class="text-xs text-muted font-light leading-relaxed mb-4">
-              Croissants frescos, café quentinho e mimos para a primeira manhã depois da festa!
-            </p>
-          </div>
-          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
-              <span class="font-serif text-lg font-bold text-charcoal">R$ 95,00</span>
-            </div>
-            <button 
-              onclick="openPixModal('Café na Cama dos Recém-Casados', 95)"
-              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
-              Presentear
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 3 -->
-      <article data-category="casa-nova" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
-        <div class="relative h-44 overflow-hidden bg-linen-dark">
-          <img 
-            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80" 
-            alt="Sofá Confortável" 
-            loading="lazy"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
-            Casa Nova
-          </span>
-        </div>
-        <div class="p-5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Cota para o Sofá Retrátil</h3>
-            <p class="text-xs text-muted font-light leading-relaxed mb-4">
-              Para as futuras noites de filmes, séries e pipoca com os amigos em casa.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
-              <span class="font-serif text-lg font-bold text-charcoal">R$ 350,00</span>
-            </div>
-            <button 
-              onclick="openPixModal('Cota para o Sofá Confortável da Sala', 350)"
-              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
-              Presentear
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 4 -->
-      <article data-category="lua-de-mel" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
-        <div class="relative h-44 overflow-hidden bg-linen-dark">
-          <img 
-            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" 
-            alt="Passeio de Barco" 
-            loading="lazy"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
-            Lua de Mel
-          </span>
-        </div>
-        <div class="p-5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Passeio de Barco ao Pôr do Sol</h3>
-            <p class="text-xs text-muted font-light leading-relaxed mb-4">
-              Navegar com vista paradisíaca e fotos perfeitas para guardar pela vida toda.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
-              <span class="font-serif text-lg font-bold text-charcoal">R$ 180,00</span>
-            </div>
-            <button 
-              onclick="openPixModal('Passeio de Barco ao Pôr do Sol', 180)"
-              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
-              Presentear
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 5 -->
-      <article data-category="casa-nova" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
-        <div class="relative h-44 overflow-hidden bg-linen-dark">
-          <img 
-            src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80" 
-            alt="Air Fryer e Eletros" 
-            loading="lazy"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
-            Casa Nova
-          </span>
-        </div>
-        <div class="p-5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Air Fryer dos Sonhos</h3>
-            <p class="text-xs text-muted font-light leading-relaxed mb-4">
-              O eletrodoméstico que vai salvar os jantares rápidos e saudáveis dos noivos.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
-              <span class="font-serif text-lg font-bold text-charcoal">R$ 290,00</span>
-            </div>
-            <button 
-              onclick="openPixModal('Air Fryer dos Sonhos', 290)"
-              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
-              Presentear
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 6 -->
-      <article data-category="casa-nova" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
-        <div class="relative h-44 overflow-hidden bg-linen-dark">
-          <img 
-            src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80" 
-            alt="Supermercado" 
-            loading="lazy"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
-            Casa Nova
-          </span>
-        </div>
-        <div class="p-5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Primeira Feira do Mês</h3>
-            <p class="text-xs text-muted font-light leading-relaxed mb-4">
-              Para abastecer a despensa com chocolates, café, frutas e tudo que um novo lar precisa!
-            </p>
-          </div>
-          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
-              <span class="font-serif text-lg font-bold text-charcoal">R$ 150,00</span>
-            </div>
-            <button 
-              onclick="openPixModal('Primeira Compra de Supermercado', 150)"
-              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
-              Presentear
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 7 -->
-      <article data-category="experiencias" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
-        <div class="relative h-44 overflow-hidden bg-linen-dark">
-          <img 
-            src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600&q=80" 
-            alt="Degustação de Vinhos" 
-            loading="lazy"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
-            Experiências
-          </span>
-        </div>
-        <div class="p-5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Noite dos Vinhos & Queijos</h3>
-            <p class="text-xs text-muted font-light leading-relaxed mb-4">
-              Uma garrafa especial para celebrar as primeiras datas comemorativas do casal.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
-              <span class="font-serif text-lg font-bold text-charcoal">R$ 130,00</span>
-            </div>
-            <button 
-              onclick="openPixModal('Noite dos Vinhos & Queijos', 130)"
-              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
-              Presentear
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 8 -->
-      <article data-category="lua-de-mel" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
-        <div class="relative h-44 overflow-hidden bg-linen-dark">
-          <img 
-            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" 
-            alt="Spa do Casal" 
-            loading="lazy"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
-            Lua de Mel
-          </span>
-        </div>
-        <div class="p-5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Sessão Relax de Spa a Dois</h3>
-            <p class="text-xs text-muted font-light leading-relaxed mb-4">
-              Massagem relaxante pós-festa para renovar as energias na lua de mel.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
-              <span class="font-serif text-lg font-bold text-charcoal">R$ 260,00</span>
-            </div>
-            <button 
-              onclick="openPixModal('Sessão Relax de Spa a Dois', 260)"
-              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
-              Presentear
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 9 -->
-      <article data-category="experiencias" class="gift-card bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-subtle hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group">
-        <div class="relative h-44 overflow-hidden bg-linen-dark">
-          <img 
-            src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80" 
-            alt="Drinques na Praia" 
-            loading="lazy"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full">
-            Experiências
-          </span>
-        </div>
-        <div class="p-5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-charcoal mb-1">Rodada de Drinques Tropicais</h3>
-            <p class="text-xs text-muted font-light leading-relaxed mb-4">
-              Água de coco e coquetéis à beira da piscina para os noivos relaxarem.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-linen-dark flex items-center justify-between mt-auto">
-            <div>
-              <span class="text-[10px] uppercase text-muted tracking-wider block">Valor</span>
-              <span class="font-serif text-lg font-bold text-charcoal">R$ 80,00</span>
-            </div>
-            <button 
-              onclick="openPixModal('Rodada de Drinques Tropicais', 80)"
-              class="px-4 py-2 rounded-full bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm">
-              Presentear
-            </button>
-          </div>
-        </div>
-      </article>
-
+      <!-- Cards populados dinamicamente via src/ui/pages/presentes.js -->
     </div>
   </main>
 
@@ -473,21 +148,28 @@
     <div class="max-w-xl mx-auto flex flex-col items-center gap-2">
       <div class="font-cursive text-3xl text-gold-dark">Maria Eduarda & Davi</div>
       <p class="text-xs text-muted">Com gratidão e amor por compartilhar este momento tão especial conosco.</p>
-      <p class="text-[11px] text-muted/60 mt-2 font-sans">16.10.2027 • Taguatinga & Brasília, DF</p>
+      <div class="flex items-center justify-center gap-3 mt-2">
+        <a href="gerenciar-imagens.html" class="text-[10px] text-gold-dark hover:underline opacity-75 hover:opacity-100">
+          🖼️ Painel de Imagens
+        </a>
+        <span class="text-muted/40 text-[10px]">•</span>
+        <a href="admin.html" class="text-[10px] text-gold-dark hover:underline opacity-75 hover:opacity-100">
+          🔒 Área dos Noivos (Login)
+        </a>
+      </div>
     </div>
   </footer>
 
   <!-- MODAL PIX (COM QR CODE E COPIA-E-COLA) -->
   <div id="pix-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-    
-    <!-- Caixa do Modal -->
     <div id="pix-modal-box" class="bg-white w-full max-w-md rounded-3xl p-6 sm:p-7 shadow-modal border border-gold/30 relative flex flex-col items-center transform transition-transform duration-300 modal-enter max-h-[92vh] overflow-y-auto no-scrollbar">
       
       <!-- Botão Fechar -->
       <button 
-        onclick="closePixModal()" 
+        type="button"
+        data-action="close-modal"
         aria-label="Fechar"
-        class="absolute top-4 right-4 text-muted hover:text-charcoal p-1.5 rounded-full hover:bg-linen-dark transition-colors">
+        class="absolute top-4 right-4 text-muted hover:text-charcoal p-1.5 rounded-full hover:bg-linen-dark transition-colors cursor-pointer">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
@@ -516,8 +198,7 @@
             id="modal-gift-amount" 
             min="5" 
             step="5" 
-            class="font-serif text-lg font-bold text-charcoal bg-transparent w-24 outline-none text-center"
-            oninput="updatePixPayload()">
+            class="font-serif text-lg font-bold text-charcoal bg-transparent w-24 outline-none text-center">
         </div>
       </div>
 
@@ -528,20 +209,17 @@
           src="" 
           alt="QR Code Pix" 
           class="w-44 h-44 object-contain rounded-lg">
-        <div id="qrcode-loading" class="absolute inset-0 bg-white/80 rounded-2xl flex items-center justify-center text-xs text-muted font-medium hidden">
-          Gerando QR Code...
-        </div>
       </div>
 
       <!-- Informações dos Beneficiários -->
       <div class="text-center mb-3">
-        <p class="text-xs text-charcoal font-semibold">Beneficiários: <span class="font-normal text-muted">Maria Eduarda & Davi</span></p>
+        <p class="text-xs text-charcoal font-semibold">Beneficiários: <span id="pix-beneficiary-display" class="font-normal text-muted">Maria Eduarda & Davi</span></p>
         <p class="text-[11px] text-muted mt-0.5">Chave Pix: <span id="pix-key-display" class="font-mono text-charcoal font-medium">noivos.mariaedavi@gmail.com</span></p>
       </div>
 
       <!-- Caixa de Código Pix Copia e Cola -->
       <div class="w-full mb-3">
-        <label class="text-[10px] uppercase tracking-wider text-muted font-semibold block mb-1">Pix Copia e Cola:</label>
+        <label for="pix-copia-cola" class="text-[10px] uppercase tracking-wider text-muted font-semibold block mb-1">Pix Copia e Cola:</label>
         <div class="relative flex items-center">
           <input 
             type="text" 
@@ -550,8 +228,8 @@
             class="w-full text-xs font-mono bg-linen-dark border border-gold/30 rounded-xl py-2 pl-3 pr-20 text-muted select-all outline-none">
           <button 
             id="btn-copy-pix"
-            onclick="copyPixCode()" 
-            class="absolute right-1 px-3 py-1.5 rounded-lg bg-gold hover:bg-gold-hover text-white text-[11px] font-semibold tracking-wider uppercase transition-all duration-200 flex items-center gap-1 shadow-sm">
+            type="button"
+            class="absolute right-1 px-3 py-1.5 rounded-lg bg-gold hover:bg-gold-hover text-white text-[11px] font-semibold tracking-wider uppercase transition-all duration-200 flex items-center gap-1 shadow-sm cursor-pointer">
             <span id="copy-text">Copiar</span>
           </button>
         </div>
@@ -572,8 +250,9 @@
         </a>
 
         <button 
-          onclick="closePixModal()" 
-          class="w-full py-2.5 rounded-xl bg-charcoal text-white hover:bg-gold text-xs font-semibold uppercase tracking-wider transition-colors duration-200">
+          type="button"
+          data-action="close-modal"
+          class="w-full py-2.5 rounded-xl bg-charcoal text-white hover:bg-gold text-xs font-semibold uppercase tracking-wider transition-colors duration-200 cursor-pointer">
           Já realizei o Pix
         </button>
       </div>
@@ -581,231 +260,192 @@
     </div>
   </div>
 
-  <script>
-    // Configurações dos Noivos
-    const PIX_CONFIG = {
-      chave: "noivos.mariaedavi@gmail.com",
-      beneficiario: "MARIA EDUARDA E DAVI",
-      cidade: "BRASILIA",
-      whatsappTelefone: "5561999999999" // Telefone ilustrativo para envio de carinho no WhatsApp
-    };
+  <!-- MODAL DE DETALHES DO PRODUTO (FOTO COMERCIAL, SPECS & DUPLO CTA) -->
+  <div id="product-detail-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-charcoal/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+    <div id="product-modal-box" class="bg-white w-full max-w-2xl rounded-3xl p-5 sm:p-7 shadow-modal border border-gold/30 relative flex flex-col transform transition-transform duration-300 modal-enter max-h-[92vh] overflow-y-auto no-scrollbar">
+      
+      <!-- Botão Fechar -->
+      <button 
+        type="button"
+        data-action="close-product-modal"
+        aria-label="Fechar detalhes"
+        class="absolute top-4 right-4 z-10 text-muted hover:text-charcoal p-1.5 rounded-full hover:bg-linen-dark transition-colors cursor-pointer bg-white/80 backdrop-blur-sm">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
 
-    // Estado da Aplicação
-    let currentGift = {
-      title: "",
-      amount: 100
-    };
+      <!-- Conteúdo em 2 Colunas no Desktop -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        
+        <!-- Coluna Esquerda: Imagem em Destaque & Preço -->
+        <div class="flex flex-col gap-3">
+          <div class="relative h-60 sm:h-72 w-full rounded-2xl overflow-hidden bg-linen-dark border border-gold/25 shadow-sm">
+            <img 
+              id="pm-image" 
+              src="" 
+              alt="Foto do Produto" 
+              class="w-full h-full object-cover">
+            
+            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+              <span id="pm-category-badge" class="bg-white/95 backdrop-blur-sm text-[10px] uppercase tracking-wider font-semibold text-gold-dark px-2.5 py-1 rounded-full shadow-sm">
+                Categoria
+              </span>
+            </div>
+          </div>
 
-    /**
-     * Função pura para calcular o CRC16 (Padrão CCITT-FALSE requerido pela especificação BACEN do Pix)
-     */
-    function computeCRC16(payload) {
-      let crc = 0xFFFF;
-      for (let i = 0; i < payload.length; i++) {
-        crc ^= (payload.charCodeAt(i) << 8);
-        for (let j = 0; j < 8; j++) {
-          if ((crc & 0x8000) !== 0) {
-            crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
-          } else {
-            crc = (crc << 1) & 0xFFFF;
-          }
-        }
-      }
-      return crc.toString(16).toUpperCase().padStart(4, '0');
-    }
+          <!-- Valor e Tipo -->
+          <div class="bg-linen/60 rounded-xl p-3 border border-gold/20 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] uppercase text-muted tracking-wider block font-medium">Valor Sugerido</span>
+              <span id="pm-price" class="font-serif text-2xl font-bold text-charcoal">R$ 0,00</span>
+            </div>
+            <span id="pm-type-badge" class="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+              Opção Física ou Pix
+            </span>
+          </div>
+        </div>
 
-    /**
-     * Montador do padrão EMVCo Payload Pix Copia e Cola Oficial
-     */
-    function generatePixPayload(key, name, city, amount, reference) {
-      const formatField = (id, value) => {
-        const len = value.length.toString().padStart(2, '0');
-        return `${id}${len}${value}`;
-      };
+        <!-- Coluna Direita: Informações, Nota Afetiva e Especificações -->
+        <div class="flex flex-col justify-between h-full">
+          <div>
+            <h3 id="pm-title" class="font-serif text-2xl font-bold text-charcoal leading-snug mb-1">
+              Nome do Presente
+            </h3>
+            <p id="pm-model" class="text-xs font-mono text-gold-dark font-medium mb-3">
+              Modelo técnico
+            </p>
 
-      // 26: Merchant Account Information
-      const gui = formatField('00', 'br.gov.bcb.pix');
-      const pixKey = formatField('01', key);
-      const merchantAccount = formatField('26', `${gui}${pixKey}`);
+            <!-- Mensagem Afetiva dos Noivos -->
+            <div class="bg-linen-dark/50 rounded-xl p-3.5 border-l-2 border-gold mb-4">
+              <div class="flex items-center gap-1.5 text-[11px] font-semibold text-charcoal uppercase tracking-wider mb-1">
+                <span>❤️ Por que escolhemos este item?</span>
+              </div>
+              <p id="pm-affective-note" class="text-xs text-muted leading-relaxed font-light italic">
+                Nota afetiva dos noivos...
+              </p>
+            </div>
 
-      const formattedAmount = (amount && parseFloat(amount) > 0) 
-        ? parseFloat(amount).toFixed(2) 
-        : '';
+            <!-- Especificações Técnicas -->
+            <div id="pm-specs-container" class="mb-4">
+              <h4 class="text-[11px] uppercase tracking-wider font-semibold text-charcoal mb-2 flex items-center gap-1">
+                <span>📋 Detalhes & Especificações:</span>
+              </h4>
+              <div id="pm-specs-list" class="bg-white rounded-xl border border-linen-dark p-3 space-y-1">
+                <!-- Linhas de specs dinâmicas -->
+              </div>
+            </div>
+          </div>
 
-      let payload = [
-        formatField('00', '01'), // Payload Format Indicator
-        merchantAccount,
-        formatField('52', '0000'), // Merchant Category Code
-        formatField('53', '986'),  // Transaction Currency (BRL)
-        formattedAmount ? formatField('54', formattedAmount) : '',
-        formatField('58', 'BR'),   // Country Code
-        formatField('59', name.substring(0, 25)),
-        formatField('60', city.substring(0, 15)),
-        formatField('62', formatField('05', (reference || 'CASAMENTO').replace(/[^a-zA-Z0-9]/g, '').substring(0, 20))), // Additional Data Field
-        '6304' // Checksum Indicator
-      ].join('');
+        </div>
+      </div>
 
-      // Calcula o CRC16 dos bytes anteriores
-      const crc = computeCRC16(payload);
-      return payload + crc;
-    }
+      <!-- SEÇÃO INFERIOR: DUPLO CTA & ORIENTAÇÃO AO CONVIDADO -->
+      <div class="mt-6 pt-5 border-t border-linen-dark flex flex-col gap-4">
+        
+        <!-- Copywriting Acolhedor e Educado -->
+        <div class="text-center px-2">
+          <p class="text-xs text-charcoal font-medium">
+            ✨ Fique totalmente à vontade para presentear como for mais cômodo e especial para você!
+          </p>
+          <p class="text-[11px] text-muted font-light mt-0.5">
+            Você pode contribuir com a cota em Pix ou comprar o produto físico na sua loja de preferência.
+          </p>
+        </div>
 
-    /**
-     * Abre o modal com os dados do presente
-     */
-    function openPixModal(giftTitle, amount, type = 'fixed') {
-      currentGift.title = giftTitle;
-      currentGift.amount = amount || 100;
+        <!-- Grade de Ações (Duplo Call To Action) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          
+          <!-- Opção A: Presentear via Pix (Cota Instantânea) -->
+          <div class="bg-linen/40 rounded-2xl p-4 border border-gold/30 flex flex-col justify-between">
+            <div>
+              <span class="inline-block text-[10px] uppercase font-bold tracking-wider text-gold-dark bg-gold/15 px-2 py-0.5 rounded-full mb-1.5">
+                Opção 1 • Rápido & Sem Frete
+              </span>
+              <h4 class="font-serif text-sm font-bold text-charcoal mb-1">Enviar Valor via Pix</h4>
+              <p class="text-[11px] text-muted leading-relaxed mb-3">
+                Gera o Pix Copia e Cola e QR Code imediato com o valor exato deste presente.
+              </p>
+            </div>
+            <button 
+              id="pm-pix-cta"
+              type="button"
+              class="w-full py-2.5 px-4 rounded-xl bg-gold hover:bg-gold-hover text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 shadow-sm flex items-center justify-center gap-1 cursor-pointer">
+              <span>Contribuir via Pix</span>
+            </button>
+          </div>
 
-      const modal = document.getElementById('pix-modal');
-      const modalBox = document.getElementById('pix-modal-box');
-      const titleElem = document.getElementById('modal-gift-title');
-      const amountInput = document.getElementById('modal-gift-amount');
+          <!-- Opção B: Comprar na Loja Oficial (Produto Físico) -->
+          <div id="pm-store-section" class="bg-white rounded-2xl p-4 border border-charcoal/20 flex flex-col justify-between">
+            <div>
+              <span class="inline-block text-[10px] uppercase font-bold tracking-wider text-charcoal bg-charcoal/10 px-2 py-0.5 rounded-full mb-1.5">
+                Opção 2 • Entrega Física
+              </span>
+              <h4 class="font-serif text-sm font-bold text-charcoal mb-1">Comprar na Loja</h4>
+              <p class="text-[11px] text-muted leading-relaxed mb-3">
+                Abre o link do modelo recomendado em uma loja online para compra direta.
+              </p>
+            </div>
+            <a 
+              id="pm-store-cta"
+              href="#" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="w-full py-2.5 px-4 rounded-xl border border-charcoal text-charcoal hover:bg-charcoal hover:text-white text-xs font-semibold uppercase tracking-wider transition-colors duration-200 flex items-center justify-center gap-1.5 text-center cursor-pointer">
+              <span>Ver Produto na Loja ↗</span>
+            </a>
+          </div>
 
-      titleElem.textContent = giftTitle;
-      amountInput.value = currentGift.amount;
+        </div>
 
-      updatePixPayload();
+        <!-- Endereço de Entrega dos Noivos (Se optar por comprar físico) -->
+        <div id="pm-delivery-section" class="bg-linen-dark/50 rounded-xl p-3 border border-gold/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div>
+            <span class="font-semibold text-charcoal block text-[11px] uppercase tracking-wider mb-0.5">
+              📦 Endereço para entrega dos noivos:
+            </span>
+            <p id="pm-delivery-text" class="text-muted font-mono text-[11px]">
+              A/C Maria Eduarda & Davi — Taguatinga Norte, Brasília — DF
+            </p>
+          </div>
+          <button 
+            id="pm-btn-copy-address"
+            type="button"
+            class="px-3 py-1.5 rounded-lg border border-gold/40 hover:border-gold bg-white text-gold-dark hover:bg-gold/10 text-[11px] font-semibold whitespace-nowrap transition-colors flex items-center gap-1 cursor-pointer">
+            <span id="pm-copy-address-text">Copiar Endereço</span>
+          </button>
+        </div>
 
-      // Transição suave de abertura
-      modal.classList.remove('hidden');
-      requestAnimationFrame(() => {
-        modal.classList.remove('opacity-0');
-        modalBox.classList.remove('modal-enter');
-        modalBox.classList.add('modal-enter-active');
-      });
+      </div>
 
-      // Prevenir scroll do body quando modal estiver aberto
-      document.body.style.overflow = 'hidden';
-    }
+    </div>
+  </div>
 
-    /**
-     * Atualiza o código Pix, QR code e link do WhatsApp
-     */
-    function updatePixPayload() {
-      const amountInput = document.getElementById('modal-gift-amount');
-      const qrcodeImg = document.getElementById('pix-qrcode-img');
-      const copiaColaInput = document.getElementById('pix-copia-cola');
-      const whatsappBtn = document.getElementById('whatsapp-share-btn');
+  <!-- ARQUITETURA MODULAR DE SCRIPTS -->
+  <!-- 1. Configurações -->
+  <script src="src/config/pix.config.js"></script>
+  <script src="src/config/wedding.config.js"></script>
 
-      const amountVal = parseFloat(amountInput.value) || 0;
-      currentGift.amount = amountVal;
+  <!-- 2. Core (Domínio Financeiro Puro) -->
+  <script src="src/core/pix/crc16.js"></script>
+  <script src="src/core/pix/pixPayload.js"></script>
 
-      // Gera a string do Pix Copia e Cola
-      const pixPayloadString = generatePixPayload(
-        PIX_CONFIG.chave,
-        PIX_CONFIG.beneficiario,
-        PIX_CONFIG.cidade,
-        amountVal,
-        'NOIVOSMD'
-      );
+  <!-- 3. Camada de Dados (Repository) -->
+  <script src="src/data/gifts.data.js"></script>
 
-      // Atualiza input com payload completo
-      copiaColaInput.value = pixPayloadString;
+  <!-- 4. Serviços de Infraestrutura -->
+  <script src="src/services/clipboardService.js"></script>
+  <script src="src/services/qrCodeService.js"></script>
+  <script src="src/services/whatsappService.js"></script>
 
-      // Gera QR Code via API pública do qrserver
-      const encodedData = encodeURIComponent(pixPayloadString);
-      qrcodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=4&data=${encodedData}`;
+  <!-- 5. Componentes de UI -->
+  <script src="src/ui/components/giftCard.js"></script>
+  <script src="src/ui/components/filterBar.js"></script>
+  <script src="src/ui/components/pixModal.js"></script>
+  <script src="src/ui/components/productModal.js"></script>
 
-      // Configura o link do WhatsApp para envio de carinho
-      const valorFormatado = amountVal > 0 ? ` de R$ ${amountVal.toFixed(2).replace('.', ',')}` : '';
-      const mensagemWhats = `Olá Maria Eduarda e Davi! Acabei de contribuir com o presente "${currentGift.title}"${valorFormatado} para o casamento de vocês. Que Deus abençoe essa nova etapa com muita felicidade! ❤️✨`;
-      whatsappBtn.href = `https://api.whatsapp.com/send?phone=${PIX_CONFIG.whatsappTelefone}&text=${encodeURIComponent(mensagemWhats)}`;
-    }
+  <!-- 6. Controlador da Página -->
+  <script src="src/ui/pages/presentes.js"></script>
 
-    /**
-     * Fecha o modal
-     */
-    function closePixModal() {
-      const modal = document.getElementById('pix-modal');
-      const modalBox = document.getElementById('pix-modal-box');
-
-      modalBox.classList.remove('modal-enter-active');
-      modalBox.classList.add('modal-exit');
-      modal.classList.add('opacity-0');
-
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        modalBox.classList.remove('modal-exit');
-        modalBox.classList.add('modal-enter');
-        document.body.style.overflow = '';
-      }, 250);
-    }
-
-    /**
-     * Copia o código Pix para a área de transferência
-     */
-    function copyPixCode() {
-      const input = document.getElementById('pix-copia-cola');
-      const copyText = document.getElementById('copy-text');
-      const btn = document.getElementById('btn-copy-pix');
-
-      input.select();
-      input.setSelectionRange(0, 99999);
-
-      // Usar execCommand para assegurar suporte dentro de iframes e navegadores restritos
-      try {
-        document.execCommand('copy');
-      } catch (err) {
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(input.value);
-        }
-      }
-
-      // Feedback visual refinado
-      copyText.textContent = "Copiado!";
-      btn.classList.remove('bg-gold', 'hover:bg-gold-hover');
-      btn.classList.add('bg-green-700');
-
-      setTimeout(() => {
-        copyText.textContent = "Copiar";
-        btn.classList.remove('bg-green-700');
-        btn.classList.add('bg-gold', 'hover:bg-gold-hover');
-      }, 2200);
-    }
-
-    /**
-     * Filtro de categorias dos presentes
-     */
-    function filterGifts(category, clickedBtn) {
-      // Atualiza estilo dos botões
-      document.querySelectorAll('.filter-tab').forEach(btn => {
-        btn.classList.remove('bg-gold', 'text-white', 'shadow-sm');
-        btn.classList.add('bg-white', 'border', 'border-gold/25', 'text-muted');
-      });
-
-      clickedBtn.classList.remove('bg-white', 'border', 'border-gold/25', 'text-muted');
-      clickedBtn.classList.add('bg-gold', 'text-white', 'shadow-sm');
-
-      // Filtra os cards com animação simples
-      const cards = document.querySelectorAll('.gift-card');
-      cards.forEach(card => {
-        const itemCategory = card.getAttribute('data-category');
-        if (category === 'todos' || itemCategory === category) {
-          card.style.display = 'flex';
-          card.style.opacity = '0';
-          setTimeout(() => {
-            card.style.opacity = '1';
-          }, 40);
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    // Fechar modal ao clicar no fundo escurecido
-    document.getElementById('pix-modal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closePixModal();
-      }
-    });
-
-    // Fechar modal com a tecla Escape
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && !document.getElementById('pix-modal').classList.contains('hidden')) {
-        closePixModal();
-      }
-    });
-  </script>
 </body>
 </html>
